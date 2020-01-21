@@ -103,7 +103,7 @@
 \chapter{Einleitung}
     Die Firma ZKW möchte für zahlreiche in Entwicklung und bereits in Produktion befindliche LED Einheiten einen universell einsetzbaren LED Treiber mit linear einstellbarem Strom. Dabei soll jede einzelne LED von maximal 84 individuell in ihrer Helligkeit eingestellt werden können.
     
-	\begin{adjustbox}{center,caption={Blockschaltbild von ZKW},label={somelabel},nofloat=figure,vspace=\bigskipamount}
+	\begin{adjustbox}{center,caption={Blockschaltbild von ZKW},label={ZKW-Blockschaltbild},nofloat=figure,vspace=\bigskipamount}
 	\includegraphics[width=\textwidth]{img/ZKW_Blockschaltbild.PNG}
 	\end{adjustbox}
 
@@ -123,17 +123,45 @@
 	\section{Verwendete Software}
 	Die hier aufgeführte und kurz erklärte Software wurde für die Erreichung der Ziele in diesem Projekt verwendet.
 	
-	\paragraph{LTSpice}
-	\paragraph{Draw.io}
-	\paragraph{Altium Designer 19}
+	\paragraph{LTSpice}\hfill \break
+	LTspice ist eine kostenlose Software des ehemaligen Halbleiterherstellers Linear Technology (seit 2017: Analog Devices) zur Schaltungssimulation. Es basiert auf SPICE, ist dazu kompatibel und besonders zur Simulation von Schaltnetzteilen geeignet. Entwickelt und gepflegt wird es von Mike Engelhardt.\footnote{https://de.wikipedia.org/wiki/LTspice}
+	\paragraph{Draw.io}\hfill \break
+	Draw.io stellt sich als ein technisch anspruchsvolles Diagramm-Tool vor, das im Browser arbeitet und Modellierungssprachen wie UML, ERM und BTPM unterstützt. Die Standard-Version ist kostenlos.\footnote{https://www.tecchannel.de/a/draw-io-kostenloses-diagramm-tool-fuer-den-browser,2078028}
+	\paragraph{Altium Designer 19}\hfill \break
+	Eines der Hauptziele von Altium ist es, eine integrierte Entwicklungslösung zur Elektronikentwicklung anzubieten.
+	Altium Designer beinhaltet die Schaltbildeingabe, einen PCB Layout Editor mit Integritätsanalyse sowie eine auf SPICE-Modellen gestützte Schaltungssimulation.\footnote{https://de.wikipedia.org/wiki/Altium\_Designer}\\
+	In diesem Projekt wurde es dazu verwendet, um die Schaltungen zu Zeichnen und das PCB damit zu erstellen.
 	\paragraph{TeXstudio}
 	
 	\section{Berechnungen}
 	
 \chapter{Ergebnisse}
 	\section{Analogteil}
+	Da die Eingangsspannung mit der das Gerät versorgt werden soll, zwischen 10 und 15 Volt liegt, muss man die Spannung erhöhen, was in diesem Fall mit einem SEPIC-Converter passiert. Als Basis dafür wurde der LT3757 Verwendet. 
+	
+	\paragraph{SEPIC Funktionsprinzip}\footnote{https://www.elektroniknet.de/elektronik-automotive/sonstiges/sepic-wandler-fuer-automotive-anwendungen-1571.html}\hfill \break
+	Die Anstiegssteilheit der Ströme IL1 und IL2 hängen von der Eingangsspannung und von den Induktivitätswerten der Spulen ab. Wenn der Schalter (Q) geschlossen wird, liegt an L1 die Eingangsspannung und an Cs eine Spannung, die genau so groß wie die Eingangsspannung ist. Der Strom steigt in den Spulen L1 und L2 an und Energie wird in den Spulen gespeichert. In dieser Zeit wird die Diode D in Sperrrichtung betrieben und der Ausgangskondensator muss den Strom für die angeschlossene Last liefern. Wenn der Schalter geöffnet wird, kehrt sich die Polarität der Spannung an den Spulen um. Die Diode leitet nun die gespeicherte Energie an den Ausgangskondensator und an die angeschlossene Last.
+	\begin{adjustbox}{center,caption={PRinzipschaltung eines SEPIC-Converters},label={SEPIC-Prinzipschaltung},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=10cm]{img/SEPIC_PRinzipschaltung.jpg}
+	\end{adjustbox}
+	
 		\subsection{Schaltung}
+			\subsubsection{LTSpice}
+			\begin{adjustbox}{center,caption={Simulationsschaltung des Analogteils in LTSpice},label={fig:LTSpice-Schaltung-Analogteil},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/LTSpice_Schaltung_Analogteil.PNG}
+			\end{adjustbox}
+			\subsubsection{Altium}
 		\subsection{Simulationen}
+			\begin{adjustbox}{center,caption={Simulation der Schaltung Mittels LTSpice},label={fig:LTSpice-Simulation-1},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_1.PNG}
+			\end{adjustbox}
+			Wie in Abbildung \ref{fig:LTSpice-Simulation-1} zu sehen, ist in der Simulation die Eingangsspannung(in) auf 10 Volt eingestellt, der SEPIC-Converter braucht hier ca. 2,75ms um die Ausgangsspannung(out) auf konstante 50 Volt einzustellen. Bei der Simulierten Belastung von 40 Ohm(Rlast) wird ca 1 Ampere aus der Schaltung gezogen. Das entspricht auch den Leistungsanforderungen der Firma, welche die maximale benötigte Ausgangsleistung mit 40 Watt angegeben hat. 
+			
+			\begin{align*} 
+			P_{out} = U_{out} \cdot I_{Rlast} = 50V \cdot 1A = 50W
+			\end{align*} 
+			
+			Laut Simulation hat diese Schaltung eine Ausgangsleistung von 50W, was sogar mehr ist als angegeben. 
 	
 	\section{Digitalteil}
 		\subsection{Schaltung}
