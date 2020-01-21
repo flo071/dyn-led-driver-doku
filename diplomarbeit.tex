@@ -1,0 +1,172 @@
+%% Dokumentklasse KOMA-Script Report
+\documentclass[paper=a4, 12pt]{scrreprt}
+%% Encoding UTF8
+\usepackage[utf8]{inputenc}
+%% 8 Bit Aufloesung der Buchstaben
+\usepackage[T1]{fontenc}
+%% Seitenraender
+\usepackage[scale=0.85]{geometry}
+%% Spracheinstellungen
+\usepackage[english, naustrian]{babel} % your native language must be the last one!!
+%% erweiterte Farbenpalette
+\usepackage[dvipsnames]{xcolor}
+%% Abbildungen
+\usepackage{float}
+\usepackage{adjustbox}
+%% Tabellen (erweitert)
+\usepackage{tabularx}
+%% TikZ + Circuit-TikZ (fuer Schaltungen)
+\usepackage[europeanresistors, europeaninductors]{circuitikz}
+%% Nuetzliche TikZ Libraries
+\usetikzlibrary{arrows, automata, positioning}
+%% mathematik
+\usepackage{amsmath, amssymb}
+%\usepackage{mathtools}	
+%% pdf-einbindung
+\usepackage{pdfpages}
+%% scource-code einbindung
+\usepackage{listings, scrhack} %scrhack vermeidet Umschaltung auf KOMA Floats..
+\usepackage{courier}
+%% euro-symbol
+\usepackage{eurosym}
+%% landcsape-seiten ermöglichen
+\usepackage{lscape}
+
+%% Diplomarbeits-Format
+\usepackage{srdpdipa}
+
+%% Abkuerzungsverzeichnis
+\usepackage[]{acronym}
+
+%% Todos
+\usepackage[]{todonotes}
+
+%% Ganttdiagramme
+\usepackage{pgfgantt}
+
+%% Subfigures
+\usepackage[lofdepth]{subfig}
+
+%% definitionen =====================================%%
+\dataSchool{HTBLuVA St. Pölten}
+\dataDepartment{Höhere Lehranstalt für Elektronik und Technische Informatik}
+\dataSubdepartment{Ausbildungsschwerpunkte Embedded Systems}
+\dataSession{2019/20}
+
+\title{CAN-Bus gesteuerte Stromquelle}
+\author{Florian Hintermeier \and Dominik Gansch}
+\date{\today}
+\place{St. P\"olten}
+\professor{Dipl.-Ing. Josef Radlbauer}
+%%====================================================%%
+
+% Hyperlinks im Dokument
+\usepackage[colorlinks=true,
+    linkcolor=black,
+    citecolor=green,
+    bookmarks=true,
+    urlcolor=black,
+    bookmarksopen=true]{hyperref}
+
+\begin{document}
+
+\frontmatter
+
+%% titelseite ==========================================%%
+\maketitle
+%%======================================================%%
+
+%% komplett leere seite ================================%%
+\newpage\null\thispagestyle{empty}\newpage
+%%======================================================%%
+
+%% eidesstattliche erklärung ===========================%%
+%%\begin{affidavit}
+%%    \unterschrift{Florian Hintermeier}
+%%    \unterschrift{Dominik Gansch}
+%%\end{affidavit}
+%%======================================================%%
+
+%% dokumentation (deutsch/englisch) ====================%%
+%%\includepdf[pages=-]{form/dokumentation-de.pdf}
+%%\includepdf[pages=-]{form/dokumentation-en.pdf}
+%%======================================================%%
+
+%% inhaltsverzeichnis ==================================%%
+\tableofcontents
+%%======================================================%%
+
+%% HAUPTTEIL ===========================================%%
+\responsible{Florian Hintermeier, Dominik Gansch}
+\mainmatter
+
+\chapter{Einleitung}
+    Die Firma ZKW möchte für zahlreiche in Entwicklung und bereits in Produktion befindliche LED Einheiten einen universell einsetzbaren LED Treiber mit linear einstellbarem Strom. Dabei soll jede einzelne LED von maximal 84 individuell in ihrer Helligkeit eingestellt werden können.
+    
+	\begin{adjustbox}{center,caption={Blockschaltbild von ZKW},label={somelabel},nofloat=figure,vspace=\bigskipamount}
+	\includegraphics[width=\textwidth]{img/ZKW_Blockschaltbild.PNG}
+	\end{adjustbox}
+
+	Das Ziel liegt darin, eine geeignete Schaltung zu entwickeln um den von ZKW gegebenen Anforderungen zu entsprechen. Zu sehen sind diese in Abbildung 1.1.
+
+\chapter{Individuelle Zielsetzung}
+    \section{Hardware}    	
+    	\subsubsection{Analogteil}
+        Dieser Teil wird von Florian Hintermeier entwickelt. Er enthält die Schaltung um die Angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen.
+        
+        \subsubsection{Digitalteil}
+        Dieser Teil wird von Dominik Gansch entwickelt. Er beinhaltet den Mikrocontroller, der von der ZKW application CAN befehle entgegennimmt und diese richtig umsetzt und die richtigen Einstellungen am Analogteil der Schaltung trifft.
+    
+    %%\section{Software}
+
+\chapter{Grundlagen und Methoden}
+	\section{Verwendete Software}
+	Die hier aufgeführte und kurz erklärte Software wurde für die Erreichung der Ziele in diesem Projekt verwendet.
+	
+	\paragraph{LTSpice}
+	\paragraph{Draw.io}
+	\paragraph{Altium Designer 19}
+	\paragraph{TeXstudio}
+	
+	\section{Berechnungen}
+	
+\chapter{Ergebnisse}
+	\section{Analogteil}
+		\subsection{Schaltung}
+		\subsection{Simulationen}
+	
+	\section{Digitalteil}
+		\subsection{Schaltung}
+
+
+%% ANHANG ==============================================%%
+\appendix
+
+%% abkürzungsverzeichnis ===============================%%
+\input{tex/abkuerzungen.tex}
+%%======================================================%%
+
+%% abbildungsverzeichnis ===============================%%
+\setcounter{lofdepth}{2}
+\dipalistoffigures
+%%======================================================%%
+
+%% tabellenverzeichnis =================================%%
+\setcounter{lotdepth}{2}
+\dipalistoftables
+%%======================================================%%
+
+%% danksagungen=========================================%%
+%%\input{tex/danksagungen.tex}%% Für Diplomarbeit hinzufügen
+%%======================================================%%
+
+%% literaturverzeichnis ================================%%
+%%\newewpage
+%%\input{tex/literatur.tex}
+%%======================================================%%
+
+%% betreuungsprotokolle ================================%%
+%%\includepdf[pages=-]{form/betreuungsprotokoll_1.pdf} Noch hinzufügen
+%% =====================================================%%
+
+\end{document}
