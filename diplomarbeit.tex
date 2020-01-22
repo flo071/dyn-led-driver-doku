@@ -155,23 +155,31 @@
 			\subsubsection{Altium}
 			Die Schaltung in Altium wurde für eine bessere Übersicht in einige Teile aufgeteilt.
 			\paragraph{SEPIC}
-			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+			\begin{adjustbox}{center,caption={Grundbeschaltung des LT3757},label={fig:LT3757-Grundbeschaltung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/SEPIC_Altium.PNG}
 			\end{adjustbox}
 			\paragraph{Undervoltage Shutdown für SEPIC}
-			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+			\begin{adjustbox}{center,caption={Undervoltage Shutdown SChaltung für LT3757},label={fig:uvlo},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[height=6cm]{img/Undervolteage_Shutdown_SEPIC.PNG}
 			\end{adjustbox}
+			Dieser Teil der Schaltung ist dafür zuständig, dass die Spannung am Eingang überprüft wird, wenn die Spannung zu klein ist, wird der SEPIC-Chip deaktiviert um keine Schäden verursachen zu können.
 			\paragraph{Feedback Schaltung für SEPIC}
-			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+			\begin{adjustbox}{center,caption={Feedback Schaltung für SEPIC},label={fig:feedback},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[height=6cm]{img/Feedback_SEPIC.PNG}
 			\end{adjustbox}
+			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird.
 			\paragraph{Regelung für SEPIC}
-			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+			\begin{adjustbox}{center,caption={Regelungsschaltung für LT3757},label={fig:regelung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Regelung_SEPIC.PNG}
 			\end{adjustbox}
 			\paragraph{Negative Spannung}
+			\begin{adjustbox}{center,caption={Schaltung für Versorgung von OPV der Stromquelle},label={fig:neg-spg},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[height=10cm]{img/Negative_Spannung.PNG}
+			\end{adjustbox}
 			\paragraph{Stromquelle}
+			\begin{adjustbox}{center,caption={Schaltung für die Einstellbare Stromquelle},label={fig:stromquelle},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[height=8cm]{img/Stromquelle_SEPIC.PNG}
+			\end{adjustbox}
 			
 			
 		\subsection{Simulationen}
