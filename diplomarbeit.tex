@@ -77,7 +77,7 @@
 %%======================================================%%
 
 %% komplett leere seite ================================%%
-\newpage\null\thispagestyle{empty}\newpage
+%%\newpage\null\thispagestyle{empty}\newpage
 %%======================================================%%
 
 %% eidesstattliche erklärung ===========================%%
@@ -131,19 +131,21 @@
 	Eines der Hauptziele von Altium ist es, eine integrierte Entwicklungslösung zur Elektronikentwicklung anzubieten.
 	Altium Designer beinhaltet die Schaltbildeingabe, einen PCB Layout Editor mit Integritätsanalyse sowie eine auf SPICE-Modellen gestützte Schaltungssimulation.\footnote{https://de.wikipedia.org/wiki/Altium\_Designer}\\
 	In diesem Projekt wurde es dazu verwendet, um die Schaltungen zu Zeichnen und das PCB damit zu erstellen.
-	\paragraph{TeXstudio}
+	\paragraph{TeXstudio}\hfill \break
+	TeXstudio ist ein LaTeX-Editor für Windows, Linux, BSD und (Mac) OS X. Er ist open source und basiert auf Texmaker. Wie andere bekannten LaTeX-Editoren bietet auch er die grundlegende Unterstützung beim Einfügen von LaTeX-Befehlen, Syntax-Hervorhebung, eine integrierte Vorschaufunktion und eine Projektfunktion.\footnote{https://latex.tugraz.at/programme/texstudio}
+	\newpage
 	
-	\section{Berechnungen}
+	\section{Basis des Analogteils}
+	Die Basis des Analogteils bildet eine SEPIC Schaltung, das Funktionsprinzip wird unten Beschrieben.
+	\paragraph{SEPIC Funktionsprinzip}\footnote{https://www.elektroniknet.de/elektronik-automotive/sonstiges/sepic-wandler-fuer-automotive-anwendungen-1571.html}\hfill \break
+	Die Anstiegssteilheit der Ströme IL1 und IL2 hängen von der Eingangsspannung und von den Induktivitätswerten der Spulen ab. Wenn der Schalter (Q) geschlossen wird, liegt an L1 die Eingangsspannung und an Cs eine Spannung, die genau so groß wie die Eingangsspannung ist. Der Strom steigt in den Spulen L1 und L2 an und Energie wird in den Spulen gespeichert. In dieser Zeit wird die Diode D in Sperrrichtung betrieben und der Ausgangskondensator muss den Strom für die angeschlossene Last liefern. Wenn der Schalter geöffnet wird, kehrt sich die Polarität der Spannung an den Spulen um. Die Diode leitet nun die gespeicherte Energie an den Ausgangskondensator und an die angeschlossene Last.
+	\begin{adjustbox}{center,caption={Prinzipschaltung eines SEPIC-Converters},label={fig:SEPIC-Prinzipschaltung},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=10cm]{img/SEPIC_PRinzipschaltung.jpg}
+	\end{adjustbox}
 	
 \chapter{Ergebnisse}
 	\section{Analogteil}
 	Da die Eingangsspannung mit der das Gerät versorgt werden soll, zwischen 10 und 15 Volt liegt, muss man die Spannung erhöhen, was in diesem Fall mit einem SEPIC-Converter passiert. Als Basis dafür wurde der LT3757 Verwendet. 
-	
-	\paragraph{SEPIC Funktionsprinzip}\footnote{https://www.elektroniknet.de/elektronik-automotive/sonstiges/sepic-wandler-fuer-automotive-anwendungen-1571.html}\hfill \break
-	Die Anstiegssteilheit der Ströme IL1 und IL2 hängen von der Eingangsspannung und von den Induktivitätswerten der Spulen ab. Wenn der Schalter (Q) geschlossen wird, liegt an L1 die Eingangsspannung und an Cs eine Spannung, die genau so groß wie die Eingangsspannung ist. Der Strom steigt in den Spulen L1 und L2 an und Energie wird in den Spulen gespeichert. In dieser Zeit wird die Diode D in Sperrrichtung betrieben und der Ausgangskondensator muss den Strom für die angeschlossene Last liefern. Wenn der Schalter geöffnet wird, kehrt sich die Polarität der Spannung an den Spulen um. Die Diode leitet nun die gespeicherte Energie an den Ausgangskondensator und an die angeschlossene Last.
-	\begin{adjustbox}{center,caption={PRinzipschaltung eines SEPIC-Converters},label={SEPIC-Prinzipschaltung},nofloat=figure,vspace=\bigskipamount}
-		\includegraphics[height=10cm]{img/SEPIC_PRinzipschaltung.jpg}
-	\end{adjustbox}
 	
 		\subsection{Schaltung}
 			\subsubsection{LTSpice}
@@ -151,6 +153,27 @@
 				\includegraphics[width=\textwidth]{img/LTSpice_Schaltung_Analogteil.PNG}
 			\end{adjustbox}
 			\subsubsection{Altium}
+			Die Schaltung in Altium wurde für eine bessere Übersicht in einige Teile aufgeteilt.
+			\paragraph{SEPIC}
+			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/SEPIC_Altium.PNG}
+			\end{adjustbox}
+			\paragraph{Undervoltage Shutdown für SEPIC}
+			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[height=6cm]{img/Undervolteage_Shutdown_SEPIC.PNG}
+			\end{adjustbox}
+			\paragraph{Feedback Schaltung für SEPIC}
+			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[height=6cm]{img/Feedback_SEPIC.PNG}
+			\end{adjustbox}
+			\paragraph{Regelung für SEPIC}
+			\begin{adjustbox}{center,caption={},label={fig:},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/Regelung_SEPIC.PNG}
+			\end{adjustbox}
+			\paragraph{Negative Spannung}
+			\paragraph{Stromquelle}
+			
+			
 		\subsection{Simulationen}
 			\begin{adjustbox}{center,caption={Simulation der Schaltung Mittels LTSpice},label={fig:LTSpice-Simulation-1},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_1.PNG}
