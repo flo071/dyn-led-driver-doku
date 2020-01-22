@@ -137,10 +137,42 @@
 	\section{Basis des Analogteils}
 	Die Basis des Analogteils bildet eine SEPIC Schaltung, das Funktionsprinzip wird unten Beschrieben.
 	\paragraph{SEPIC Funktionsprinzip}\footnote{https://www.elektroniknet.de/elektronik-automotive/sonstiges/sepic-wandler-fuer-automotive-anwendungen-1571.html}\hfill \break
-	Die Anstiegssteilheit der Ströme IL1 und IL2 hängen von der Eingangsspannung und von den Induktivitätswerten der Spulen ab. Wenn der Schalter (Q) geschlossen wird, liegt an L1 die Eingangsspannung und an Cs eine Spannung, die genau so groß wie die Eingangsspannung ist. Der Strom steigt in den Spulen L1 und L2 an und Energie wird in den Spulen gespeichert. In dieser Zeit wird die Diode D in Sperrrichtung betrieben und der Ausgangskondensator muss den Strom für die angeschlossene Last liefern. Wenn der Schalter geöffnet wird, kehrt sich die Polarität der Spannung an den Spulen um. Die Diode leitet nun die gespeicherte Energie an den Ausgangskondensator und an die angeschlossene Last.
+	Die Anstiegszeit der Ströme IL1 und IL2 hängen von der Eingangsspannung und von den Induktivitätswerten der Spulen ab. Wenn der Schalter (Q) geschlossen wird, liegt an L1 die Eingangsspannung und an Cs eine Spannung, die genau so groß wie die Eingangsspannung ist. Der Strom steigt in den Spulen L1 und L2 an und Energie wird in den Spulen gespeichert. In dieser Zeit wird die Diode D in Sperrrichtung betrieben und der Ausgangskondensator muss den Strom für die angeschlossene Last liefern. Wenn der Schalter geöffnet wird, kehrt sich die Polarität der Spannung an den Spulen um. Die Diode leitet nun die gespeicherte Energie an den Ausgangskondensator und an die angeschlossene Last.
 	\begin{adjustbox}{center,caption={Prinzipschaltung eines SEPIC-Converters},label={fig:SEPIC-Prinzipschaltung},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[height=10cm]{img/SEPIC_PRinzipschaltung.jpg}
+	\hfill \break
 	\end{adjustbox}
+	\pagebreak
+	\section{Basis des Digitalteils}
+	Die Basis jeder modernen Digitalschaltung ist ein Mikrocontroller.\hfill \break\break
+	Nach diesen Anforderungen wurde dieser ausgewählt:
+	\hfill \break 
+	
+	\begin{center}
+	\begin{minipage}{0.5\textwidth}
+	\begin{itemize}
+		\item High-Speed CAN-Bus
+		\item Erweiterte CAN-Bus Adressbits
+		\item Zwei unabhängige CAN-Bus Schnittstellen
+		\item Integrierter ADC
+		\item Integrierter DAC
+		\item Ausreichend IO-Pins
+		\item keine komplexe Grundbeschaltung
+		\item 5V oder 3,3V Versorgung
+	\end{itemize}
+	\end{minipage}
+	\end{center}
+
+	\hfill \break
+	Als perfekte Wahl stellte sich der AT32UC3C2512C von Microchip heraus. Dieser erfüllt alle Anforderungen und ist noch dazu Preiswert.
+	\hfill \break
+	\begin{adjustbox}{center,caption={AT32UC3C2512C im QFN-64 Package},label={fig:uC Package},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=10cm]{img/AT32UC3C2512C.png}
+		\hfill \break
+	\end{adjustbox}
+	
+		
+	\section{Grundkonzept der Stromquelle}
 	
 \chapter{Ergebnisse}
 	\section{Analogteil}
@@ -234,5 +266,4 @@
 %% betreuungsprotokolle ================================%%
 %%\includepdf[pages=-]{form/betreuungsprotokoll_1.pdf} Noch hinzufügen
 %% =====================================================%%
-
 \end{document}
