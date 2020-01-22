@@ -144,13 +144,18 @@
 	
 \chapter{Ergebnisse}
 	\section{Analogteil}
-	Da die Eingangsspannung mit der das Gerät versorgt werden soll, zwischen 10 und 15 Volt liegt, muss man die Spannung erhöhen, was in diesem Fall mit einem SEPIC-Converter passiert. Als Basis dafür wurde der LT3757 Verwendet. 
+	Da die Eingangsspannung mit der das Gerät versorgt werden soll, zwischen 10 und 15 Volt liegt, muss man die Spannung erhöhen, was in diesem Fall mit einem SEPIC-Converter passiert. Als Basis dafür wurde der LT3757 Verwendet.\hfill \break
+	Die Grundbeschaltung wurde aus dem Datenblatt\footnote{https://www.analog.com/media/en/technical-documentation/data-sheets/3757Afe.pdf Seite 31} übernommen, die benötigten Bauteilwerte wurden jedoch mittels Simulationen mit LTSpice ermittelt. 
+	\begin{adjustbox}{center,caption={Referenzschaltung für SEPIC}, label={fig:LTSpice-Schaltung-Analogteil},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=7cm]{img/Referenzschaltung_SEPIC.PNG}
+	\end{adjustbox}
 	
 		\subsection{Schaltung}
 			\subsubsection{LTSpice}
 			\begin{adjustbox}{center,caption={Simulationsschaltung des Analogteils in LTSpice},label={fig:LTSpice-Schaltung-Analogteil},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/LTSpice_Schaltung_Analogteil.PNG}
 			\end{adjustbox}
+			\pagebreak
 			\subsubsection{Altium}
 			Die Schaltung in Altium wurde für eine bessere Übersicht in einige Teile aufgeteilt.
 			\paragraph{SEPIC}
@@ -167,6 +172,7 @@
 				\includegraphics[height=6cm]{img/Feedback_SEPIC.PNG}
 			\end{adjustbox}
 			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird.
+			\pagebreak
 			\paragraph{Regelung für SEPIC}
 			\begin{adjustbox}{center,caption={Regelungsschaltung für LT3757},label={fig:regelung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Regelung_SEPIC.PNG}
