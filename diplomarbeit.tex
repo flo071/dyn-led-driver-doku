@@ -104,15 +104,25 @@
     Die Firma ZKW möchte für zahlreiche in Entwicklung und bereits in Produktion befindliche LED Einheiten einen universell einsetzbaren LED Treiber mit linear einstellbarem Strom. Dabei soll jede einzelne LED von maximal 84 individuell in ihrer Helligkeit eingestellt werden können.
     
 	\begin{adjustbox}{center,caption={Blockschaltbild von ZKW},label={ZKW-Blockschaltbild},nofloat=figure,vspace=\bigskipamount}
-	\includegraphics[width=\textwidth]{img/ZKW_Blockschaltbild.PNG}
+	\includegraphics[width=15cm]{img/ZKW_Blockschaltbild.PNG}
 	\end{adjustbox}
 
 	Das Ziel liegt darin, eine geeignete Schaltung zu entwickeln um den von ZKW gegebenen Anforderungen zu entsprechen. Zu sehen sind diese in Abbildung 1.1.
+	
+	Diese Angaben sind:
+	\begin{itemize}
+		\item{Eingangsspannung zwischen 10 und 15 Volt}
+		\item{Einstellbare Ausgangsspannung zwischen bis 42 Volt}
+		\item{Einstellbaren Ausgangsstrom zwischen zwischen 0 und 1500mA}
+		\item{Mikrocontroller kommunikation über High-Speed-CAN}
+		\item{Unterstützung für maximal 7 LED Boards mit gesamt maximal 84 LEDs}
+	\end{itemize}
+	
 
 \chapter{Individuelle Zielsetzung}
     \section{Hardware}    	
     	\subsubsection{Analogteil}
-        Dieser Teil wird von Florian Hintermeier entwickelt. Er enthält die Schaltung um die Angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen.
+        Dieser Teil wird von Florian Hintermeier entwickelt. Der Analogteil enthält die Schaltung um die Angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen. Die Einstellungen werden von dem Mikrocontroller vom Digitalteil über den DAC eingestellt.
         
         \subsubsection{Digitalteil}
         Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.% Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
@@ -164,7 +174,7 @@
 			\end{adjustbox}
 			Oben abgebildet ist die Grundbeschaltung des SEPIC-Chip LT3757. Das RC-Netzwerk bei dem VC-Pin hält die Spannung für die Erzeugung der Internen Spannung stabil erzeugt wird stabil gehalten werden kann. Am RT-Pin wird mittels des Wiederstandes eine Schaltfrequenz eingestellt. Der Pin INTVCC ist da um die Spannungen für die Interne Versorgung und das Gate stabil zu halten.
 			\paragraph{Undervoltage Shutdown für SEPIC}
-			\begin{adjustbox}{center,caption={Undervoltage Shutdown SChaltung für LT3757},label={fig:uvlo},nofloat=figure,vspace=\bigskipamount}
+			\begin{adjustbox}{center,caption={Undervoltage Shutdown Schaltung für LT3757},label={fig:uvlo},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[height=6cm]{img/Undervolteage_Shutdown_SEPIC.PNG}
 			\end{adjustbox}
 			Dieser Teil der Schaltung ist dafür zuständig, dass die Spannung am Eingang überprüft wird, wenn die Spannung zu klein ist, wird der SEPIC-Chip deaktiviert um keine Schäden verursachen zu können.
@@ -173,23 +183,26 @@
 			\begin{adjustbox}{center,caption={Feedback Schaltung für SEPIC},label={fig:feedback},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[height=6cm]{img/Feedback_SEPIC.PNG}
 			\end{adjustbox}
-			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird.
+			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird. Eingestellt wird die Schaltfrequenz mit dem Spannungsteiler von R203 und R204/R213(Nur einer von beiden wird verwendet), es soll immer so sein, dass die Spannung am FBX-PIN 1,6 Volt beträgt. 
+			Dank der Z-Diode wird die Spannung am Digitalen-Potentiometer(R213) nicht höher als die Versorgung, 3,9V maximal.
 			\paragraph{Regelung für SEPIC}
 			\begin{adjustbox}{center,caption={Regelungsschaltung für LT3757},label={fig:regelung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Regelung_SEPIC.PNG}
 			\end{adjustbox}
+			Der SENSE-PIN misst den Strom am FET, wenn der zu groß ist, wird ausgeschaltet. Die Spulen L1 und L2 sind gegengleich gekoppelt mit einem Verhältnis von 1 zu 1. Am Ausgang (OUT) liegt dann die mit den Widerständen von der Feedback Schaltung eingestellte Spannung.
 			\pagebreak
 			\paragraph{Negative Spannung}
 			\begin{adjustbox}{center,caption={Schaltung für Versorgung von OPV der Stromquelle},label={fig:neg-spg},nofloat=figure,vspace=\bigskipamount}
-				\includegraphics[height=10cm]{img/Negative_Spannung.PNG}
+				\includegraphics[height=9cm]{img/Negative_Spannung.PNG}
 			\end{adjustbox}
+			Diese Schaltung dient dazu, eine Spannung zu erzeugen, die immer 8,2V unter der Spannung von (OUT) liegt. Die niedrigere Spannung liegt an dem Punkt U-Neg-OUT. In einer Simulation in Abbildung \ref{fig:LTSpice-Simulation-1} kann man den Spannungsunterschied zwischen V(out) und V(uneg) sehen.
 			\paragraph{Stromquelle}
 			\begin{adjustbox}{center,caption={Schaltung für die Einstellbare Stromquelle},label={fig:stromquelle},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[height=8cm]{img/Stromquelle_SEPIC.PNG}
 			\end{adjustbox}
+			Bei dieser Schaltung wird ein Stromspiegel verwendet um den Strom mit dem ADC des Mikrocontrollers messen zu können. Weiters wird der maximale Strom mit der Spannung am Plus Eingang des OPV (U203) mit dem DAC des Mikrocontrollers eingestellt.
 			
-			
-		\subsection{Simulationen}
+		\subsection{Simulation}
 			\begin{adjustbox}{center,caption={Simulation der Schaltung Mittels LTSpice},label={fig:LTSpice-Simulation-1},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_1.PNG}
 			\end{adjustbox}
@@ -200,7 +213,14 @@
 			\end{align*} 
 			
 			Laut Simulation hat diese Schaltung eine Ausgangsleistung von 50W, was sogar mehr ist als angegeben. 
-	
+			
+			\begin{adjustbox}{center,caption={Simulation der Schaltung Mittels LTSpice},label={fig:LTSpice-Simulation-2},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_2.PNG}
+			\end{adjustbox}
+			
+			Die Frequenz am GATE ist nach ca 2,75ms stabil, genauso wie V(out) in Abbildung \ref{fig:LTSpice-Simulation-1}. 
+			\pagebreak
+			
 	\section{Digitalteil}
 		\subsection{Schaltung}
 
@@ -232,7 +252,11 @@
 %%======================================================%%
 
 %% betreuungsprotokolle ================================%%
-%%\includepdf[pages=-]{form/betreuungsprotokoll_1.pdf} Noch hinzufügen
+\includepdf[pages=-]{seminare/First_DA_Seminar.pdf}
+\includepdf[pages=-]{seminare/Second_DA_Seminar.pdf}
+\includepdf[pages=-]{seminare/Third_DA_Seminar.pdf}
+\includepdf[pages=-]{seminare/Fourth_DA_Seminar.pdf}
+\includepdf[pages=-]{seminare/Fifth_DA_Seminar.pdf}
 %% =====================================================%%
 
 \end{document}

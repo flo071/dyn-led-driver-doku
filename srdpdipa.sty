@@ -39,7 +39,7 @@
 %% Namenskonventionen, koennen bei Bedarf geaendert werden!
 \def\@dankname{Danksagungen}
 \def\@eidname{Eidesstattliche Erklärung}
-\long\def\@DIPLOMARBEIT{DIPLOMARBEIT}
+\long\def\@DIPLOMARBEIT{PROJEKTARBEIT}
 \providecommand{\dokumenttyp}[1]{\gdef\@DIPLOMARBEIT{#1}}
 \iflanguage{english}{
     \gdef\@dankname{Acknowledgement}
@@ -82,7 +82,7 @@
 }%
 
 % Damit auf Chapter-Seiten keine Nummern sind!!!
-\def\chapterpagestyle{empty}
+\def\chapterpagestyle{scrheadings}
 
 %% Responsible Makro aus dipa.cls entnommen und leicht angepasst.
 %% Setzt die Fusszeile auf den aktuellen Verfasser des Textteils.
