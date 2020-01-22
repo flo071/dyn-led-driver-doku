@@ -115,8 +115,7 @@
         Dieser Teil wird von Florian Hintermeier entwickelt. Er enthält die Schaltung um die Angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen.
         
         \subsubsection{Digitalteil}
-        Dieser Teil wird von Dominik Gansch entwickelt. Er beinhaltet den Mikrocontroller, der von der ZKW application CAN befehle entgegennimmt und diese richtig umsetzt und die richtigen Einstellungen am Analogteil der Schaltung trifft.
-    
+        Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller, welcher über CAN-Bus Befehle (von der ZKW-Application) bestimmte Kommandos erhält. Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt.    
     %%\section{Software}
 
 \chapter{Grundlagen und Methoden}
