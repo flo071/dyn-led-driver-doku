@@ -185,6 +185,8 @@
 		\includegraphics[height=\textwidth]{img/Diplomarbeit_Blockschaltbild.jpg}
 		\hfill \break
 	\end{adjustbox}
+	Der Aktuelle stand des Schaltungskonzepts wurde in einen Blockschaltbild festgehalten.
+	Diese Vorgehensweise war ungemein wichtig damit der Auftraggeber sich ein genaueres Bild der Arbeit machen konnte und ob das Projekt den Anforderungen gerecht entwickelt wird.
 	
 	
 \chapter{Ergebnisse}
@@ -248,7 +250,7 @@
 			\end{align*} 
 			
 			Laut Simulation hat diese Schaltung eine Ausgangsleistung von 50W, was sogar mehr ist als angegeben. 
-			
+			\ref{fig:LTSpice-Simulation-1} zu sehen, ist
 			\begin{adjustbox}{center,caption={Simulation der Schaltung Mittels LTSpice},label={fig:LTSpice-Simulation-2},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_2.PNG}
 			\end{adjustbox}
@@ -258,6 +260,19 @@
 			
 	\section{Digitalteil}
 		\subsection{Schaltung}
+		\begin{adjustbox}{center,caption={Mikrocontroller Grundbeschaltung},label={fig:uC Grundbeschaltung},nofloat=figure,vspace=\bigskipamount}
+			\includegraphics[height=12cm]{img/Grundbeschaltung_uC.PNG}
+		\end{adjustbox}
+	Fast alle passiven Bauelemente welche in der Abbildung \ref{fig:uC Grundbeschaltung} zu sehen sind werden für die Grundfunktionen benötigt. Die Kondensatoren (C110 \& C111) beim 16MHz Quarz (X101) werden für den internen Oszillator benötigt. Für die Stabilität des internen LDO wurden die Kondensatoren mit 100nF \& 470pF dimensioniert.
+	Alle anderen Kondensatoren sind Stützkondensatoren. Die Taster (T101 \& T101) werden für die Programmierung oder auch für den Reset des Mikrocontrollers benötigt. Die Programmierung erfolgt über USB und als physikalische Schnittstelle wurde eine Mikro-USB Buchse gewählt. RXD und TXD sind die Datenleitungen zum CAN-Transceiver. 
+		\begin{adjustbox}{center,caption={CAN-Transceiver},label={fig:CAN-Transceiver},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=5cm]{img/CAN_Tranceiver.PNG}
+		\end{adjustbox}
+	Für die Steuerung des Analogteils wurde ein Digitales-Poti verwendet welches über die SPI-Schnittstelle angesteuert wird, des weiteren werden der interne DAC und ADC auch für die Steuerung des Regelkreises mit eingebunden. Für die Versorgung wurde die Betriebsspannung auf 5V geregelt.
+	\begin{adjustbox}{center,caption={VoltageRegulator 7805 },label={fig:VoltageRegulator.PNG},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=5cm]{img/VoltageRegulator.PNG}
+	\end{adjustbox}
+
 
 
 %% ANHANG ==============================================%%
