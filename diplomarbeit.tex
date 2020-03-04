@@ -25,7 +25,7 @@
 %% pdf-einbindung
 \usepackage{pdfpages}
 %% scource-code einbindung
-\usepackage{listings, scrhack} %scrhack vermeidet Umschaltung auf KOMA Floats..
+\usepackage{listings} %scrhack vermeidet Umschaltung auf KOMA Floats..
 \usepackage{courier}
 %% euro-symbol
 \usepackage{eurosym}
@@ -47,13 +47,30 @@
 %% Subfigures
 \usepackage[lofdepth]{subfig}
 
+\lstdefinestyle{customc}{
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	frame=L,
+	xleftmargin=\parindent,
+	language=C,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+
+
+\lstset{escapechar=@,style=customc}
+
 %% definitionen =====================================%%
 \dataSchool{HTBLuVA St. Pölten}
 \dataDepartment{Höhere Lehranstalt für Elektronik und Technische Informatik}
 \dataSubdepartment{Ausbildungsschwerpunkte Embedded Systems}
 \dataSession{2019/20}
 
-\title{CAN-Bus gesteuerte Stromquelle}
+\title{Universeller hochdynamischer LED-Treiber}
 \author{Florian Hintermeier \and Dominik Gansch}
 \date{\today}
 \place{St. P\"olten}
@@ -77,19 +94,19 @@
 %%======================================================%%
 
 %% komplett leere seite ================================%%
-%%\newpage\null\thispagestyle{empty}\newpage
+\newpage\null\thispagestyle{empty}\newpage
 %%======================================================%%
 
 %% eidesstattliche erklärung ===========================%%
-%%\begin{affidavit}
-%%    \unterschrift{Florian Hintermeier}
-%%    \unterschrift{Dominik Gansch}
-%%\end{affidavit}
+\begin{affidavit}
+    \unterschrift{Florian Hintermeier}
+    \unterschrift{Dominik Gansch}
+\end{affidavit}
 %%======================================================%%
 
 %% dokumentation (deutsch/englisch) ====================%%
-%%\includepdf[pages=-]{form/dokumentation-de.pdf}
-%%\includepdf[pages=-]{form/dokumentation-en.pdf}
+\includepdf[pages=-]{form/dokumentation-de.pdf}
+\includepdf[pages=-]{form/dokumentation-en.pdf}
 %%======================================================%%
 
 %% inhaltsverzeichnis ==================================%%
@@ -126,7 +143,11 @@
         
         \subsubsection{Digitalteil}
         Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.% Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
-    %%\section{Software}
+    \section{Software}
+    	\subsubsection{Initialisierungen}
+    	\subsubsection{Control Area Network}
+    	\subsubsection{Serial Peripheral Interphase}
+    	\subsubsection{ADC/DAC Einstellungen}
 
 \chapter{Grundlagen und Methoden}
 	\section{Verwendete Software}
@@ -142,6 +163,8 @@
 	In diesem Projekt wurde es dazu verwendet, um die Schaltungen zu Zeichnen und das PCB damit zu erstellen.
 	\paragraph{TeXstudio}\hfill \break
 	TeXstudio ist ein LaTeX-Editor für Windows, Linux, BSD und (Mac) OS X. Er ist open source und basiert auf Texmaker. Wie andere bekannten LaTeX-Editoren bietet auch er die grundlegende Unterstützung beim Einfügen von LaTeX-Befehlen, Syntax-Hervorhebung, eine integrierte Vorschaufunktion und eine Projektfunktion.\footnote{https://latex.tugraz.at/programme/texstudio}
+	\paragraph{Atmel Studio}\hfill \break
+	\paragraph{Atmel Flip}\hfill \break
 	\newpage
 	
 	\section{Basis des Analogteils}
@@ -272,6 +295,39 @@
 	\begin{adjustbox}{center,caption={VoltageRegulator 7805 },label={fig:VoltageRegulator.PNG},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[height=5cm]{img/VoltageRegulator.PNG}
 	\end{adjustbox}
+	\newpage
+
+	\section{Software}
+		\subsection{Grundlagen}
+		Der Verwendete Mikrocontroller ist der AT32UC3C2512C, ein 32-Bit Prozessor mit 64KB SRAM, 512KB Programmspeicher und 66MHz maximaler CPU Frequenz von Microchip.
+		
+		Da ein Mikrocontroller mit einer 32-Bit Architektur gewählt wurde, sind auch die Funktionen anders, als bei den in der HTL verwendeten 8-Bit Controllern. Zu beachten ist dabei, dass die Registerzugriffe vollkommen anders aussehen. Auch gibt es bei der AT32 Serie, die in dieser Diplomarbeit verwendet wurde, die Möglichkeit für jeden PIN eine von sechs verschiedenen Hardware-Funktionen zu übernehmen. Diese verschiedenen Funktionen kann man dem Datenblatt entnehmen.\footnote{http://ww1.microchip.com/downloads/en/DeviceDoc/doc32117.pdf Seite 11}
+		\begin{adjustbox}{center,caption={Ausschnitt aus der Peripheral Multiplexing Tabelle},label={fig:PeripheralMultiplexRegisterTabelle.PNG},nofloat=figure,vspace=\bigskipamount}
+			\includegraphics[width=\textwidth]{img/Peripheral_Multiplex_Register_Tabelle.PNG}
+		\end{adjustbox}
+		Wie oben beschrieben und auch im Bild zu sehen, kann jeder Pin bis zu sechs verschiedene Funktionen haben, in diesem Beispiel müsste man für USART RX und TX die GPIO Ports auf Mode E initialisieren.
+		\lstinputlisting[language=c, caption=GPER Beispiel]{src/gpioExample.c}
+		
+		Die Tabelle\footnote{http://ww1.microchip.com/downloads/en/DeviceDoc/doc32117.pdf Seite 468} für das Peripheral Multiplex Register findet man auch im Datenblatt des Mikrocontrollers, dort kann man herauslesen, was bei pmr[n] eingestellt werden muss.
+		\begin{adjustbox}{center,caption={Peripheral Multiplex Register Mode Tabelle},label={fig:PeripheralFunktions.PNG},nofloat=figure,vspace=\bigskipamount}
+			\includegraphics[height=4cm]{img/Peripheral_Funktions.PNG}
+		\end{adjustbox}
+		
+
+		
+		
+		\subsection{Initialisierungen}
+		\subsection{Control Area Network}
+			\subsubsection{Grundlagen}
+			\subsubsection{User Controlled Device}
+			\subsubsection{LED Matrix Manager}
+		\subsection{Serial Peripheral Interface}
+			\subsubsection{Grundlagen}
+			\subsubsection{Digital Potentiometer}
+		\subsection{Digital Analog Converter}
+			\subsubsection{Grundlagen}
+		\subsection{Analog Digital Converter}
+			\subsubsection{Grundlagen}
 
 
 
