@@ -145,7 +145,10 @@
         Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.% Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
     \section{Software}
     	\subsubsection{Initialisierungen}
+    	Dieses Teilgebiet der Softwareentwicklung wird von Florian Hintermeier umgesetzt. Es beschränkt sich auf die Initialisierung der Internen, sowohl auch der Peripherie Funktionalitäten des Mikrocontrollers.
     	\subsubsection{Control Area Network}
+    	Dieses Gebiet wird ebenfalls von FLorian Hintermeier entwickelt. Es handelt sich hierbei um die Kommunikation zwischen User Controlled Device von ZKW mit dem LED-Treiber und des des weiteren um die Kommunikation zwischen Treiber und LED Matrix Manager.
+    	Die Kommunikation zum UCD stellt die Grundeinstellungen des Treibers zur Verfügung und diese werden dann umgesetzt und an den LMM weitergegeben.
     	\subsubsection{Serial Peripheral Interphase}
     	\subsubsection{ADC/DAC Einstellungen}
 
@@ -164,7 +167,7 @@
 	\paragraph{TeXstudio}\hfill \break
 	TeXstudio ist ein LaTeX-Editor für Windows, Linux, BSD und (Mac) OS X. Er ist open source und basiert auf Texmaker. Wie andere bekannten LaTeX-Editoren bietet auch er die grundlegende Unterstützung beim Einfügen von LaTeX-Befehlen, Syntax-Hervorhebung, eine integrierte Vorschaufunktion und eine Projektfunktion.\footnote{https://latex.tugraz.at/programme/texstudio}
 	\paragraph{Atmel Studio}\hfill \break
-	\paragraph{Atmel Flip}\hfill \break
+	Das Atmel Studio (vor Version 6: "AVR Studio") ist eine kostenlose Entwicklungsumgebung (IDE) für die Programmierung der AVR-Mikrocontroller und ARM-Mikrocontroller (ab Version 6) von Atmel. Sie basiert ab Version 5 auf der Visual Studio Shell von Microsoft und besteht aus einer Projektverwaltung, einem Editor, einem Debugger und Werkzeugen zum Beschreiben der Mikrocontroller.\footnote{https://www.mikrocontroller.net/articles/Atmel\_Studio}
 	\newpage
 	
 	\section{Basis des Analogteils}
@@ -210,7 +213,22 @@
 	\end{adjustbox}
 	Der Aktuelle stand des Schaltungskonzepts wurde in einen Blockschaltbild festgehalten.
 	Diese Vorgehensweise war ungemein wichtig damit der Auftraggeber sich ein genaueres Bild der Arbeit machen konnte und ob das Projekt den Anforderungen gerecht entwickelt wird.
+	\newpage
 	
+	\section{Programmierung}
+	Der Verwendete Mikrocontroller ist der AT32UC3C2512C, ein 32-Bit Prozessor mit 64KB SRAM, 512KB Programmspeicher und 66MHz maximaler CPU Frequenz von Microchip.
+	
+	Da ein Mikrocontroller mit einer 32-Bit Architektur gewählt wurde, sind auch die Funktionen anders, als bei den in der HTL verwendeten 8-Bit Controllern. Zu beachten ist dabei, dass die Registerzugriffe vollkommen anders aussehen. Auch gibt es bei der AT32 Serie, die in dieser Diplomarbeit verwendet wurde, die Möglichkeit für jeden PIN eine von sechs verschiedenen Hardware-Funktionen zu übernehmen. Diese verschiedenen Funktionen kann man dem Datenblatt entnehmen.\footnote{http://ww1.microchip.com/downloads/en/DeviceDoc/doc32117.pdf Seite 11}
+	\begin{adjustbox}{center,caption={Ausschnitt aus der Peripheral Multiplexing Tabelle},label={fig:PeripheralMultiplexRegisterTabelle.PNG},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[width=\textwidth]{img/Peripheral_Multiplex_Register_Tabelle.PNG}
+	\end{adjustbox}
+	Wie oben beschrieben und auch im Bild zu sehen, kann jeder Pin bis zu sechs verschiedene Funktionen haben, in diesem Beispiel müsste man für USART RX und TX die GPIO Ports auf Mode E initialisieren.
+	\lstinputlisting[language=c, caption=GPER Beispiel]{src/gpioExample.c}
+	
+	Die Tabelle\footnote{http://ww1.microchip.com/downloads/en/DeviceDoc/doc32117.pdf Seite 468} für das Peripheral Multiplex Register findet man auch im Datenblatt des Mikrocontrollers, dort kann man herauslesen, was bei pmr[n] eingestellt werden muss.
+	\begin{adjustbox}{center,caption={Peripheral Multiplex Register Mode Tabelle},label={fig:PeripheralFunktions.PNG},nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[height=4cm]{img/Peripheral_Funktions.PNG}
+	\end{adjustbox}
 	
 \chapter{Ergebnisse}
 	\section{Analogteil}
@@ -279,7 +297,44 @@
 			\end{adjustbox}
 			
 			Die Frequenz am GATE ist nach ca 2,75ms stabil, genauso wie V(out) in Abbildung \ref{fig:LTSpice-Simulation-1}. 
+			
+			\subsubsection{Spannungseinstellung}
+			Um herauszufinden wie sich die Spannung bei Widerstandsänderung verändert, wurde dies auch mithilfe von LTSpice herausgefunden.
+			
+			Grundsätzlich ist es so:
+			\begin{itemize}
+				\item Hoher Widerstand -> Niedrige Spannung
+				\item Niedriger Widerstand -> Hohe Spannung
+			\end{itemize}
+			
+			Es ist schon bekannt, dass 50V die maximale Spannung ist, die noch stabil eingestellt werden kann. Diese Simulation hat ergeben, dass die niedrigste einstellbare Spannung 3,21V beträgt.
+			
+			Einige Werte dazwischen sind in diesem Diagramm abzulesen:
+			\begin{adjustbox}{center,caption={Spannungsverlauf bei Widerstandsänderung},label={fig:spgVLbWdst},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/simulationSPG.PNG}
+			\end{adjustbox}
+		
+			In dem Diagramm kann man sehen, dass die Zeit bis die Ausgangsspannung stabil ist, immer kürzer wird, je näher man der Eingangsspannung kommt, diese war in diesem Fall 10V. Das liegt daran, dass die Schaltung weniger herunter oder hinauf wandeln muss wenn die Ausgangsspannung der Eingangsspannung näher ist.
+		
+			\subsubsection{Ergebnisse der Simulationen}
+			{\large \textbf{Maximale Spannung:} 51,2V} \hfill \break
+			{\large \textbf{Minimale Spannung:} 3,2V}\hfill \break
+			{\large \textbf{Stabiler Spannungszustand:} nach durchschnittlich 1,74ms} \hfill \break
+			\newpage
+			
+			\subsubsection{Simulation eines Anwendungsfalls}
+			Von der Firma ZKW kommen verschiedene Anwendungsfälle, um zu Testen ob die SChaltung so funktioniert, wie sie es brauchen, wird einer der Fälle simuliert, statt dem LED-Strang kommt in der Simulation ein Widerstand zum Einsatz, an dem Gleich viel Spannung abfällt.
+			\begin{adjustbox}{center,caption={Anwendungsfall von ZKW},label={fig:anwendungsfall},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/SimulierterAnwendungsfall.PNG}
+			\end{adjustbox}
+			In diesem Fall brauchen die LEDs eine Spannung von 35V. Wie aus dem Diagramm herauszulesen, wird der Widerstand in der Simulation geändert auf 4.4kΩ. Das ist zwar eine Spannung von 37V, da die Schaltung für die Strommessung und Einstellung selbst ein paar Volt braucht, 2V um genau zu sein. Somit sind die 35V für die LEDs zu haben. 
+			
+			
+			
+			
+				 
 			\pagebreak
+			
 			
 	\section{Digitalteil}
 		\subsection{Schaltung}
@@ -296,38 +351,31 @@
 		\includegraphics[height=5cm]{img/VoltageRegulator.PNG}
 	\end{adjustbox}
 	\newpage
-
+	
+	\section{Hardware}
+		\subsection{PCB}
+	\newpage
+	
 	\section{Software}
-		\subsection{Grundlagen}
-		Der Verwendete Mikrocontroller ist der AT32UC3C2512C, ein 32-Bit Prozessor mit 64KB SRAM, 512KB Programmspeicher und 66MHz maximaler CPU Frequenz von Microchip.
-		
-		Da ein Mikrocontroller mit einer 32-Bit Architektur gewählt wurde, sind auch die Funktionen anders, als bei den in der HTL verwendeten 8-Bit Controllern. Zu beachten ist dabei, dass die Registerzugriffe vollkommen anders aussehen. Auch gibt es bei der AT32 Serie, die in dieser Diplomarbeit verwendet wurde, die Möglichkeit für jeden PIN eine von sechs verschiedenen Hardware-Funktionen zu übernehmen. Diese verschiedenen Funktionen kann man dem Datenblatt entnehmen.\footnote{http://ww1.microchip.com/downloads/en/DeviceDoc/doc32117.pdf Seite 11}
-		\begin{adjustbox}{center,caption={Ausschnitt aus der Peripheral Multiplexing Tabelle},label={fig:PeripheralMultiplexRegisterTabelle.PNG},nofloat=figure,vspace=\bigskipamount}
-			\includegraphics[width=\textwidth]{img/Peripheral_Multiplex_Register_Tabelle.PNG}
-		\end{adjustbox}
-		Wie oben beschrieben und auch im Bild zu sehen, kann jeder Pin bis zu sechs verschiedene Funktionen haben, in diesem Beispiel müsste man für USART RX und TX die GPIO Ports auf Mode E initialisieren.
-		\lstinputlisting[language=c, caption=GPER Beispiel]{src/gpioExample.c}
-		
-		Die Tabelle\footnote{http://ww1.microchip.com/downloads/en/DeviceDoc/doc32117.pdf Seite 468} für das Peripheral Multiplex Register findet man auch im Datenblatt des Mikrocontrollers, dort kann man herauslesen, was bei pmr[n] eingestellt werden muss.
-		\begin{adjustbox}{center,caption={Peripheral Multiplex Register Mode Tabelle},label={fig:PeripheralFunktions.PNG},nofloat=figure,vspace=\bigskipamount}
-			\includegraphics[height=4cm]{img/Peripheral_Funktions.PNG}
-		\end{adjustbox}
-		
-
-		
-		
 		\subsection{Initialisierungen}
+		Um die Gewünschte Funktionalität des Mikrocontrollers zu aktivieren müssen vor dem Eigentlichen Programmablauf alle Peripherie und auch interne Funktionen erst initialisiert werden. Dies wird mittels Bitschieben in den einzelnen Registern gemacht.
+			\subsubsection{Initialisierung von CAN}
+			Um CAN zu initialisieren müssen pro CAN-Interface mindestens sechs Register beschrieben werden.
+			Welche das sind, ist im Datenblatt zu finden, ab Seite 762. 
+			Grundsätzlich sieht die CAN Initialisierung für diesen Anwendungsfall bei einem Interface wie folgt aus:
+			\lstinputlisting[language=c, caption=CANIF1 Initialisierung]{src/canInit.c}
+		
 		\subsection{Control Area Network}
-			\subsubsection{Grundlagen}
+			\subsubsection{Grundlagen zu CAN}
 			\subsubsection{User Controlled Device}
 			\subsubsection{LED Matrix Manager}
 		\subsection{Serial Peripheral Interface}
-			\subsubsection{Grundlagen}
+			\subsubsection{Grundlagen zu SPI}
 			\subsubsection{Digital Potentiometer}
 		\subsection{Digital Analog Converter}
-			\subsubsection{Grundlagen}
+			\subsubsection{Grundlagen zum DAC}
 		\subsection{Analog Digital Converter}
-			\subsubsection{Grundlagen}
+			\subsubsection{Grundlagen zum ADC}
 
 
 
@@ -363,6 +411,8 @@
 \includepdf[pages=-]{seminare/Third_DA_Seminar.pdf}
 \includepdf[pages=-]{seminare/Fourth_DA_Seminar.pdf}
 \includepdf[pages=-]{seminare/Fifth_DA_Seminar.pdf}
+\includepdf[pages=-]{seminare/Sixth_DA_Seminar.pdf}
 \includepdf[pages=-,angle=90]{schaltungen/Dynamic_LED_Driver.pdf}
+\includepdf[pages=-,angle=90]{schaltungen/Bauteilliste.pdf}
 %%=====================================================%%
 \end{document}
