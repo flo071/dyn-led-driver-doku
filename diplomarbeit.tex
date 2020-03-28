@@ -138,19 +138,19 @@
 
 \chapter{Individuelle Zielsetzung}
     \section{Hardware}    	
-    	\subsubsection{Analogteil}
+    	\subsection{Analogteil}
         Dieser Teil wird von Florian Hintermeier entwickelt. Der Analogteil enthält die Schaltung um die Angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen. Die Einstellungen werden von dem Mikrocontroller vom Digitalteil über den DAC eingestellt.
         
-        \subsubsection{Digitalteil}
+        \subsection{Digitalteil}
         Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.% Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
     \section{Software}
-    	\subsubsection{Initialisierungen}
+    	\subsection{Initialisierungen}
     	Dieses Teilgebiet der Softwareentwicklung wird von Florian Hintermeier umgesetzt. Es beschränkt sich auf die Initialisierung der Internen, sowohl auch der Peripherie Funktionalitäten des Mikrocontrollers.
-    	\subsubsection{Control Area Network}
-    	Dieses Gebiet wird ebenfalls von FLorian Hintermeier entwickelt. Es handelt sich hierbei um die Kommunikation zwischen User Controlled Device von ZKW mit dem LED-Treiber und des des weiteren um die Kommunikation zwischen Treiber und LED Matrix Manager.
+    	\subsection{Controller Area Network}
+    	Dieses Gebiet wird ebenfalls von Florian Hintermeier entwickelt. Es handelt sich hierbei um die Kommunikation zwischen User Controlled Device von ZKW mit dem LED-Treiber und des des weiteren um die Kommunikation zwischen Treiber und LED Matrix Manager.
     	Die Kommunikation zum UCD stellt die Grundeinstellungen des Treibers zur Verfügung und diese werden dann umgesetzt und an den LMM weitergegeben.
-    	\subsubsection{Serial Peripheral Interphase}
-    	\subsubsection{ADC/DAC Einstellungen}
+    	\subsection{Serial Peripheral Interphase}
+    	\subsection{ADC/DAC Einstellungen}
 
 \chapter{Grundlagen und Methoden}
 	\section{Verwendete Software}
@@ -229,6 +229,17 @@
 	\begin{adjustbox}{center,caption={Peripheral Multiplex Register Mode Tabelle},label={fig:PeripheralFunktions.PNG},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[height=4cm]{img/Peripheral_Funktions.PNG}
 	\end{adjustbox}
+	Um diese Mikrocontroller spezifischen Funktionen verwenden zu können, braucht man folgende Headerfiles im C-Code:
+	\begin{itemize}
+		\item inttypes.h
+		\item avr32/io.h
+	\end{itemize}
+
+	Weitere verwendete Headerfiles:
+	\begin{itemize}
+		\item math.h
+	\end{itemize}
+	
 	
 \chapter{Ergebnisse}
 	\section{Analogteil}
@@ -261,8 +272,9 @@
 			\begin{adjustbox}{center,caption={Feedback Schaltung für SEPIC},label={fig:feedback},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[height=6cm]{img/Feedback_SEPIC.PNG}
 			\end{adjustbox}
-			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird. Eingestellt wird die Schaltfrequenz mit dem Spannungsteiler von R203 und R204/R213(Nur einer von beiden wird verwendet), es soll immer so sein, dass die Spannung am FBX-PIN 1,6 Volt beträgt. 
-			Dank der Z-Diode wird die Spannung am Digitalen-Potentiometer(R213) nicht höher als die Versorgung, 3,9V maximal.
+			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird. Eingestellt wird die Schaltfrequenz mit dem Spannungsteiler von R203 und R204/R213, welcher Verwendet wird, hängt von der Jumper Einstellung ab, es soll immer so sein, dass die Spannung am FBX-PIN 1,6 Volt beträgt.
+			
+			Die Z-Diode wird Deshalb benötigt, weil die Spannung bei änderung des Widerstandes höher werden kann, es wird dann vom LT3757 so geregelt, dass innerhalb kürzester Zeit wieder die gewollten 1,6V anliegen. Jedoch ist es für das Digitale Potentiometer schädlich, wenn eine Spannung höher als die Versorgungsspannung anliegt. Deshalb wurde die Z-Diode verbaut, um die Maximale Spannung, die anliegt auf 3,9V zu begrenzen.
 			\paragraph{Regelung für SEPIC}
 			\begin{adjustbox}{center,caption={Regelungsschaltung für LT3757},label={fig:regelung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Regelung_SEPIC.PNG}
@@ -322,17 +334,32 @@
 			{\large \textbf{Stabiler Spannungszustand:} nach durchschnittlich 1,74ms} \hfill \break
 			\newpage
 			
+			\subsubsection{Berechnungen}
+			Aufgrund der Simulation der Spannungseinstellungen weiß man, wie die Spannungskurve aussieht. Auf Grundlage dieser wurde eine Hyperbelfunktion aufgestellt, welche die Berechnungen für die einzustellenden Widerstandswerte für das Mikrocontroller-Programm ermöglicht. \hfill \break \hfill \break
+			\textbf{Die Funktion:} 
+			\begin{align*} 
+			U_{out}(R) = 200 \cdot R^{-1,1} + 2
+			\end{align*}
+			Die Kurve der Funktion passt zu den benötigten Spannungswerten ab einem Widerstandswert von 4Ω. Alle Spannungswerte zwischen Widerstandswerten von 4Ω und 100Ω passen zu denen aus der Simulation.
+			\begin{adjustbox}{center,caption={Berechneter Spannungsverlauf bei Widerstandsänderung},label={fig:berechnungSPG},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/berechnungSPG.PNG}
+			\end{adjustbox}
+			Im späteren Verlauf wird die Einzustellende Spannung bekannt gemacht, da man vom UCD die einzuschaltenden LEDs übertragen bekommt. Das heißt man muss in diesem Fall nicht nach der Ausgangsspannung Berechnen, da diese bekannt ist, sondern nach dem Widerstandswert. \hfill \break \hfill \break
+			\textbf{Formel zur Berechnung des Widerstandswertes:}
+			\begin{align*} 
+			R=\frac{ U - 2 }{ 200 }^{ -\frac{ 1 }{ 1,1 } }
+			\end{align*}
+			\textbf{Formel zur Berechnung des Widerstandswertes in C Code:}
+			\lstinputlisting[language=c, caption=C-Code für Widerstandsberechnung]{src/widerstandBerechnung.c}
+			\pagebreak
+			 
+			
 			\subsubsection{Simulation eines Anwendungsfalls}
 			Von der Firma ZKW kommen verschiedene Anwendungsfälle, um zu Testen ob die SChaltung so funktioniert, wie sie es brauchen, wird einer der Fälle simuliert, statt dem LED-Strang kommt in der Simulation ein Widerstand zum Einsatz, an dem Gleich viel Spannung abfällt.
 			\begin{adjustbox}{center,caption={Anwendungsfall von ZKW},label={fig:anwendungsfall},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/SimulierterAnwendungsfall.PNG}
 			\end{adjustbox}
 			In diesem Fall brauchen die LEDs eine Spannung von 35V. Wie aus dem Diagramm herauszulesen, wird der Widerstand in der Simulation geändert auf 4.4kΩ. Das ist zwar eine Spannung von 37V, da die Schaltung für die Strommessung und Einstellung selbst ein paar Volt braucht, 2V um genau zu sein. Somit sind die 35V für die LEDs zu haben. 
-			
-			
-			
-			
-				 
 			\pagebreak
 			
 			
@@ -357,25 +384,74 @@
 	\newpage
 	
 	\section{Software}
-		\subsection{Initialisierungen}
-		Um die Gewünschte Funktionalität des Mikrocontrollers zu aktivieren müssen vor dem Eigentlichen Programmablauf alle Peripherie und auch interne Funktionen erst initialisiert werden. Dies wird mittels Bitschieben in den einzelnen Registern gemacht.
+		\subsection{Programmablauf}
+		Um die Programmierung bestmöglich umsetzen zu können, ist es sinnvoll einen Programmablaufplan zu erstellen, mithilfe davon ist es einfacher Abläufe des Programms zu Planen und diese auch nachzuvollziehen und zu verstehen.
+		\begin{adjustbox}{center,caption={Programmablaufplan},label={fig:PAP.png},nofloat=figure,vspace=\bigskipamount}
+			\includegraphics[height=18cm]{img/Dyn-LED-Driver-PAP.png}
+		\end{adjustbox}
+		Für noch besseres Verständnis der Abläufe im Prgramm folgt hier zusätzlich zum Programmablaufplan noch eine Detaillierte Erklärung der einzelnen Elemente davon. Oben Angefangen und nach unten aufgearbeitet. 
+		\newpage
+		\subsubsection{Initialisierung}
+		Um die Gewünschte Funktionalität des Mikrocontrollers zu aktivieren müssen vor dem Eigentlichen Programmablauf alle Peripherie und auch interne Funktionen erst initialisiert werden. Dies wird mittels Bitschieben in den einzelnen Registern gemacht. \hfill \break \hfill \break		
+		\textbf{Zu initialisierende Funktionen:}
+		\begin{itemize}
+			\item Externe Taktquelle
+			\item Controller Area Network
+			\item Serial Peripheral Interface
+			\item Analog Digital Converter
+			\item Digital Analog Converter
+		\end{itemize}
+	
+		\subsubsection{Ablauf}
+		Nach der Initialisierung geht es direkt ins Hauptprogramm über, hier wird ständig überprüft, ob vom User Controlled Device eine Anfrage an den Mikrocontroller gemacht wurde. Hier gibt es zwei Möglichkeiten, entweder, eine Anfrage wurde getätigt, dann wird diese Ausgewertet. Ist aber keine Anfrage getätigt worden, beginnt es von neuem.\hfill \break
+		Es gibt zwei Mögliche anfragen, die Ausgewertet werden können, diese sind die Abfrage des Stromes der gerade gezogen wird und die Anweisung den Strom zu ändern oder LEDs ein oder auszuschalten.\hfill \break
+		Soll der Strom gemessen werden, wird eine ADC Messung durchgeführt, die Ergebnisse davon werden dann ausgewertet und per CAN wieder an das User Controlled Device zurückgesendet.\hfill \break
+		
+	
+		\newpage
+		
+		\subsection{Controller Area Network}
+			\subsubsection{Grundlagen zu CAN}
+			Mit CAN werden mehrere gleichberechtigte Komponenten miteinander verbunden und können somit miteinander kommunizieren. Sehr beliebt ist es, wegen seiner Störsicherheit und der Echtzeitfähigkeit. Eingesetzt wird es häufig im Automobilbereich, und der Medizintechnik aber auch in vielen weiteren Systemen.
+			
+			Die Übertragung wird über zwei Leitungen bewerkstelligt, womit die Fehleranfälligkeit, dank der Pegelunterschiede auf ein Minimum Beschränkt wird. In folgender Grafik kann man sehen, wie diese bitweise Übertragung auf den beiden CAN Leitungen aussieht.
+			\begin{adjustbox}{center,caption={CAN Übertragung},label={fig:CANbits.png},nofloat=figure,vspace=\bigskipamount}
+				\includegraphics[width=\textwidth]{img/CAN_bits.png}
+			\end{adjustbox}
+		
+			In diesem Fall wird Highspeed-CAN verwendet, was eine Übertragungsgeschwindigkeit von 1 Mbits/s ermöglicht.
+			\newpage
+			
 			\subsubsection{Initialisierung von CAN}
 			Um CAN zu initialisieren müssen pro CAN-Interface mindestens sechs Register beschrieben werden.
 			Welche das sind, ist im Datenblatt zu finden, ab Seite 762. 
 			Grundsätzlich sieht die CAN Initialisierung für diesen Anwendungsfall bei einem Interface wie folgt aus:
 			\lstinputlisting[language=c, caption=CANIF1 Initialisierung]{src/canInit.c}
-		
-		\subsection{Control Area Network}
-			\subsubsection{Grundlagen zu CAN}
+			Im oben sichtbaren C-Code sieht man die Portpin initialisierungen in den Richtigen Modus. Weiters kann man sehen, wie die Konfiguration für diesen CAN Kanal durchgeführt wird. Im Letzen Berecuh ist zu sehen, wie für diesen CAN Kanal einzelne Kontrollwerte eingestellt werden.
+			Die Wichtigsten Werte hier sind:
+			\begin{itemize}
+				\item Externer interrupt: aktiviert (wenn eine Übertragung stattfindet, wird diese sofort registriert)
+				\item Overload handling: deaktiviert (wenn eine zu lange Übertragung festgestellt wird, wird nichts unternommen, da dies nicht vorkommen sollte)
+				\item Anfragen auf den Kanal: aktiviert
+				\item Kanal generell freischalten: aktiviert
+			\end{itemize}
+			\newpage 
+			
 			\subsubsection{User Controlled Device}
 			\subsubsection{LED Matrix Manager}
+			Für die Kommunikation mit dem LMM sind einige Programmteile zuständig. Wie in einem vorherigen Kapitel schon beschrieben, auch die Initialisierungen. Hier werden aber Hauptsächlich die Teile beschrieben, welche sich um das Zusammensetzen der Nachrichten und die Aufnahme der Acknowledge Nachricht des LMM kümmern. 
+			\newpage
+			
 		\subsection{Serial Peripheral Interface}
 			\subsubsection{Grundlagen zu SPI}
-			\subsubsection{Digital Potentiometer}
+			\subsubsection{Digitales Potentiometer}
+			\newpage
 		\subsection{Digital Analog Converter}
 			\subsubsection{Grundlagen zum DAC}
+			\newpage
 		\subsection{Analog Digital Converter}
 			\subsubsection{Grundlagen zum ADC}
+			\newpage
 
 
 
@@ -390,6 +466,9 @@
 \setcounter{lofdepth}{2}
 \dipalistoffigures
 %%======================================================%%
+
+\lstlistoflistings
+
 
 %% tabellenverzeichnis =================================%%
 %\setcounter{lotdepth}{2}
