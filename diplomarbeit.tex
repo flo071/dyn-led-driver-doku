@@ -335,6 +335,7 @@
 			\newpage
 			
 			\subsubsection{Berechnungen}
+			\label{sec:berechnungen}
 			Aufgrund der Simulation der Spannungseinstellungen weiß man, wie die Spannungskurve aussieht. Auf Grundlage dieser wurde eine Hyperbelfunktion aufgestellt, welche die Berechnungen für die einzustellenden Widerstandswerte für das Mikrocontroller-Programm ermöglicht. \hfill \break \hfill \break
 			\textbf{Die Funktion:} 
 			\begin{align*} 
@@ -403,11 +404,11 @@
 		\end{itemize}
 	
 		\subsubsection{Ablauf}
-		Nach der Initialisierung geht es direkt ins Hauptprogramm über, hier wird ständig überprüft, ob vom User Controlled Device eine Anfrage an den Mikrocontroller gemacht wurde. Hier gibt es zwei Möglichkeiten, entweder, eine Anfrage wurde getätigt, dann wird diese Ausgewertet. Ist aber keine Anfrage getätigt worden, beginnt es von neuem.\hfill \break
-		Es gibt zwei Mögliche anfragen, die Ausgewertet werden können, diese sind die Abfrage des Stromes der gerade gezogen wird und die Anweisung den Strom zu ändern oder LEDs ein oder auszuschalten.\hfill \break
-		Soll der Strom gemessen werden, wird eine ADC Messung durchgeführt, die Ergebnisse davon werden dann ausgewertet und per CAN wieder an das User Controlled Device zurückgesendet.\hfill \break
-		
-	
+		Nach der Initialisierung geht es direkt ins Hauptprogramm über, hier wird ständig überprüft, ob vom User Controlled Device eine Anfrage an den Mikrocontroller gemacht wurde. Hier gibt es zwei Möglichkeiten, entweder, eine Anfrage wurde getätigt, dann wird diese Ausgewertet. Ist aber keine Anfrage getätigt worden, beginnt es von neuem.\hfill \break \hfill \break
+		Es gibt zwei Mögliche anfragen, die Ausgewertet werden können, diese sind die Abfrage des Stromes der gerade gezogen wird und die Anweisung den Strom zu ändern oder LEDs ein oder auszuschalten.\hfill \break \hfill \break
+		Soll der Strom gemessen werden, wird eine ADC Messung durchgeführt, die Ergebnisse davon werden dann ausgewertet und per CAN wieder an das User Controlled Device zurückgesendet.\hfill \break \hfill \break
+		Beim einstellen der LEDs wird ausgewertet, wie viele LEDs am Modul noch eingeschaltet sind, nach dem richtet sich die Spannung. Die Spannung wird durch das Verändern eines Spannungsteilers am Feedback Eingang des SEPIC Chips eingestellt. Dieser Spannungsteiler wird durch ein Digitales Potentiometer verändert, dieses bekommt den Widerstand so eingestellt, dass die gewünschte Ausgangsspannung anliegt. Wie man auf die werden kommt, kann im  \hyperref[sec:berechnungen]{Kapitel Berechnungen} nachgelesen werden.\hfill \break \hfill \break
+		Soll der Ausgangsstrom verändert werden, wird mithilfe des DACs die Spannung an einem der Operationsverstärker, die einen für den Stromfluss zuständigen MOSFET ansteuern, verändert. Nach dieser Änderung, wird eine ADC Messung durchgeführt, ob nun der Richtige Strom fließt, ist das nicht der Fall, wird überpüft ob zu viel oder zu wenig Strom fließt, nochmals mit dem DAC eingestellt und danach wieder gemessen, so lange, bis der Wert stimmt. Sollte es gleich beim ersten mal der gewünschte wert sein, wird ganz von vorne begonnen und auf UCD Anfragen kommen.
 		\newpage
 		
 		\subsection{Controller Area Network}
