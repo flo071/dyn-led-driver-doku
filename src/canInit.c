@@ -19,7 +19,7 @@ void can_init(void) {
 	AVR32_GPIO.port[2].pmr2 = 0; 
 	// CANIF channel 1
 	AVR32_CANIF.channel[1].CANCFG.ovrm  = 1; // Overrun Mode
-	AVR32_CANIF.channel[1].CANCFG.cmode = 2; // Loopback Mode
+	AVR32_CANIF.channel[1].CANCFG.cmode = 0; // Normal Mode
 	AVR32_CANIF.channel[1].CANCFG.sm    = 1; // Sampling Method
 	AVR32_CANIF.channel[1].CANCFG.sjw   = 1; // Sync Jump width
 	AVR32_CANIF.channel[1].CANCFG.prs   = 1; // Propagation segment
