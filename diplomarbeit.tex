@@ -449,7 +449,8 @@
 			
 			\subsubsection{User Controlled Device}
 			\subsubsection{LED Matrix Manager}
-			Für die Kommunikation mit dem LMM sind einige Programmteile zuständig. Wie in einem vorherigen Kapitel schon beschrieben, auch die Initialisierungen. Hier werden aber Hauptsächlich die Teile beschrieben, welche sich um das Zusammensetzen der Nachrichten und die Aufnahme der Acknowledge Nachricht des LMM kümmern. 
+			Für die Kommunikation mit dem LMM sind einige Programmteile zuständig. Wie in einem vorherigen Kapitel schon beschrieben, auch die Initialisierungen. Hier werden aber Hauptsächlich die Teile beschrieben, welche sich um das Zusammensetzen der Nachrichten des LMM kümmern.
+			 
 			\newpage
 			
 		\subsection{Serial Peripheral Interface}
@@ -465,6 +466,8 @@
 			\newpage
 		\subsection{Analog Digital Converter}
 			\subsubsection{Grundlagen zum ADC}
+			\subsubsection{Initialisierung vom ADC}
+			\lstinputlisting[language=c, caption=C-Code für ADC Initialisierung]{src/adcInit.c}
 			\newpage
 
 
@@ -481,9 +484,9 @@
 \dipalistoffigures
 %%======================================================%%
 
-\lstlistoflistings
-
-\newpage
+%% listingsverzeichnis =================================%%
+\addcontentsline{toc}{chapter}{Listings}\lstlistoflistings
+%%======================================================%%
 
 %% tabellenverzeichnis =================================%%
 %\setcounter{lotdepth}{2}
