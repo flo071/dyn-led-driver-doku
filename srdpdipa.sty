@@ -472,9 +472,9 @@
 %% Danksagungen ebenfalls ueber Umgebung
 \newenvironment{acknowledgements}{\null\vfill%vertikal Zentrieren
     \phantomsection
-    \addcontentsline{toc}{chapter}{\@dankname}
+    %%\addcontentsline{toc}{chapter}{\@dankname}
     \pagestyle{empty}
-    \section*{\@dankname}}%Section anlegen
+    \section*{\begin{center}\@dankname\end{center}}}%Section anlegen
     {\vfill\null\vfill%vertikal Zentrieren
 \newpage}%
 

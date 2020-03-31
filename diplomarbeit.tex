@@ -104,6 +104,10 @@
 \end{affidavit}
 %%======================================================%%
 
+%% danksagungen=========================================%%
+\input{tex/danksagungen.tex}%% Für Diplomarbeit hinzufügen
+%%======================================================%%
+
 %% dokumentation (deutsch/englisch) ====================%%
 \includepdf[pages=-]{form/dokumentation-de.pdf}
 \includepdf[pages=-]{form/dokumentation-en.pdf}
@@ -229,6 +233,7 @@
 	\begin{adjustbox}{center,caption={Peripheral Multiplex Register Mode Tabelle},label={fig:PeripheralFunktions.PNG},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[height=4cm]{img/Peripheral_Funktions.PNG}
 	\end{adjustbox}
+	\newpage
 	Um diese Mikrocontroller spezifischen Funktionen verwenden zu können, braucht man folgende Headerfiles im C-Code:
 	\begin{itemize}
 		\item inttypes.h
@@ -239,6 +244,9 @@
 	\begin{itemize}
 		\item math.h
 	\end{itemize}
+	Das math.h Headerfile wird benötigt, um die Berechnungen die für die Spannungseinstellungen nötig sind bewerkstelligen zu können. \hfill \break
+	Im io.h Headerfile finden sich alle wichtigen Definitionen bezüglich der 32-Bit AVR Mikrocontroller, im Makefile des Projekts wird der Verwendeter Mikrocontroller festgelegt, so kann der C-Compiler dann alle wichtigen Definitionen, wie Ports und Register finden und dem HEX-Code für den Controller richtig zuordnen. \hfill \break
+	Das Makefile und die anderen Projektspezifischen Daten für ein Mikrocontrollerprojekt werden von Atmel Studio nach der Konfiguration der Einstellungen erstellt. In diesen Einstellungen werden sowohl Taktfrequenz als auch Taktquelle eingestellt.
 	
 	
 \chapter{Ergebnisse}
@@ -336,7 +344,9 @@
 			
 			\subsubsection{Berechnungen}
 			\label{sec:berechnungen}
-			Aufgrund der Simulation der Spannungseinstellungen weiß man, wie die Spannungskurve aussieht. Auf Grundlage dieser wurde eine Hyperbelfunktion aufgestellt, welche die Berechnungen für die einzustellenden Widerstandswerte für das Mikrocontroller-Programm ermöglicht. \hfill \break \hfill \break
+			Aufgrund der Simulation der Spannungseinstellungen weiß man, wie die Spannungskurve aussieht. Auf Grundlage dieser wurde eine Hyperbelfunktion aufgestellt, welche die Berechnungen für die einzustellenden Widerstandswerte für das Mikrocontroller-Programm ermöglicht. \hfill \break
+			Erstellt wurde diese Funktion mithilfe GeoGebra, welches sich perfekt dafür eignet Kurven anzeigen zu lassen. Zuerst wurden die Werte aus der Simulation in Punkten Dargestellt um die Funktionskurve langsam an die Simulationskurve anpassen zu können. \hfill \break
+			Die Richtigkeit der Formel wurde überprüft, indem die werde für den Widerstand aus der Simulation für die Variable R eingesetzt wurden und das gleiche Ergebnis heraus kam. \hfill \break \hfill \break
 			\textbf{Die Funktion:} 
 			\begin{align*} 
 			U_{out}(R) = 200 \cdot R^{-1,1} + 2
@@ -354,7 +364,6 @@
 			\lstinputlisting[language=c, caption=C-Code für Widerstandsberechnung]{src/widerstandBerechnung.c}
 			\pagebreak
 			 
-			
 			\subsubsection{Simulation eines Anwendungsfalls}
 			Von der Firma ZKW kommen verschiedene Anwendungsfälle, um zu Testen ob die SChaltung so funktioniert, wie sie es brauchen, wird einer der Fälle simuliert, statt dem LED-Strang kommt in der Simulation ein Widerstand zum Einsatz, an dem Gleich viel Spannung abfällt.
 			\begin{adjustbox}{center,caption={Anwendungsfall von ZKW},label={fig:anwendungsfall},nofloat=figure,vspace=\bigskipamount}
@@ -415,7 +424,7 @@
 			\subsubsection{Grundlagen zu CAN}
 			Mit CAN werden mehrere gleichberechtigte Komponenten miteinander verbunden und können somit miteinander kommunizieren. Sehr beliebt ist es, wegen seiner Störsicherheit und der Echtzeitfähigkeit. Eingesetzt wird es häufig im Automobilbereich, und der Medizintechnik aber auch in vielen weiteren Systemen.
 			
-			Die Übertragung wird über zwei Leitungen bewerkstelligt, womit die Fehleranfälligkeit, dank der Pegelunterschiede auf ein Minimum Beschränkt wird. In folgender Grafik kann man sehen, wie diese bitweise Übertragung auf den beiden CAN Leitungen aussieht.
+			Die Übertragung wird differenziell über zwei verdrillte Leitungen bewerkstelligt, dadurch wird die Störanfälligkeit minimiert. In folgender Grafik kann man sehen, wie diese bitweise Übertragung auf den beiden CAN Leitungen aussieht.
 			\begin{adjustbox}{center,caption={CAN Übertragung},label={fig:CANbits.png},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/CAN_bits.png}
 			\end{adjustbox}
@@ -427,7 +436,7 @@
 			Um CAN zu initialisieren müssen pro CAN-Interface mindestens sechs Register beschrieben werden.
 			Welche das sind, ist im Datenblatt zu finden, ab Seite 762. 
 			Grundsätzlich sieht die CAN Initialisierung für diesen Anwendungsfall bei einem Interface wie folgt aus:
-			\lstinputlisting[language=c, caption=CANIF1 Initialisierung]{src/canInit.c}
+			\lstinputlisting[language=c, caption=C-Code für CANIF1 Initialisierung]{src/canInit.c}
 			Im oben sichtbaren C-Code sieht man die Portpin initialisierungen in den Richtigen Modus. Weiters kann man sehen, wie die Konfiguration für diesen CAN Kanal durchgeführt wird. Im Letzen Berecuh ist zu sehen, wie für diesen CAN Kanal einzelne Kontrollwerte eingestellt werden.
 			Die Wichtigsten Werte hier sind:
 			\begin{itemize}
@@ -474,14 +483,11 @@
 
 \lstlistoflistings
 
+\newpage
 
 %% tabellenverzeichnis =================================%%
 %\setcounter{lotdepth}{2}
 %\dipalistoftables
-%%======================================================%%
-
-%% danksagungen=========================================%%
-%%\input{tex/danksagungen.tex}%% Für Diplomarbeit hinzufügen
 %%======================================================%%
 
 %% literaturverzeichnis ================================%%
