@@ -461,11 +461,11 @@
 			
 			\subsubsection{LED Matrix Manager}
 			Für die Kommunikation mit dem LMM sind einige Programmteile zuständig. Wie in einem vorherigen Kapitel schon beschrieben, auch die Initialisierungen. Hier werden aber Hauptsächlich die Teile beschrieben, welche sich um das Zusammensetzen der Nachrichten des LMM kümmern. Zum einfachen verständnis wird der Ablauf mittels Flussdiagramm dargestellt.
-			\begin{adjustbox}{center,caption={Pragrammablauf LMM},label={fig:PABL-LMM},nofloat=figure,vspace=\bigskipamount}
+			\begin{adjustbox}{center,caption={Programmablauf LMM},label={fig:PABL-LMM},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Programmablauf-LMM.png}
 			\end{adjustbox}
 			Im Programmablauf ist der Teil des Programmablaufplans von Abbildung \ref{fig:PAP.png}, mit der Bezeichnung 'Übermittlung an den LMM über CAN' zu sehen. Bei diesem Prozess gibt es drei verschiedene Möglichkeiten, wie die Übertragung stattfindet, beziehungsweise ob sie stattfindet. Im Grunde werden einer Funktion alle Daten, also die ein oder auszuschaltenden LED-Adressen übergeben. Diese Adressen werden dann zu einer Nachricht zusammengesetzt, also dass nicht viele einzelne Adressen hintereinander geschickt werden, sondern mehrere gleichzeitig. Im nächsten Schritt wird überpüft ob die Verwendeten Adressen in den Vordefinierten Adressen enthalten sind. \hfill \break \newpage
-			Die Vordefinierten Adressen sehen wiefolgt aus:
+			\textbf{Die Vordefinierten Adressen sehen wie folgt aus:}
 			\lstinputlisting[language=c, caption=LED Adressen des LMMs]{src/LEDAdressen.c}
 			Um diese Adressen mit den Eingegangenen zu vergleichen wird eine Schleife verwendet, die jede Eingegangene Adresse einzeln mit jeder Vordefinierten Adresse vergleicht. Passen alle Adressen wird eine Nachricht mit LMM-ID und Den zu toggelnden LEDs zusammengesetzt und diese wird im Anschluss versendet. \hfill \break
 			Stimmen nicht alle Adressen, werden die falschen weggelassen und nur die Korrekten werden in das Adressen, ID PAket eingefügt, im Anschluss wird die Nachricht dann versendet. \hfill \break
