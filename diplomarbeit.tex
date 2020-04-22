@@ -136,6 +136,16 @@
 		\item{Unterstützung für maximal 7 LED Boards mit gesamt maximal 84 LEDs}
 	\end{itemize}
 	
+	\section{Meilensteine}
+	\begin{adjustbox}{center,nofloat=figure,vspace=\bigskipamount}
+	\includegraphics[width=\textwidth]{img/meilensteine.PNG}
+	\end{adjustbox}
+	
+	\section{Projektplan}
+	\begin{adjustbox}{center,nofloat=figure,vspace=\bigskipamount}
+		\includegraphics[width=\textwidth]{img/plan.PNG}
+	\end{adjustbox}
+	
 
 \chapter{Individuelle Zielsetzung}
     \section{Hardware}    	
@@ -468,7 +478,7 @@
 			\textbf{Die Vordefinierten Adressen sehen wie folgt aus:}
 			\lstinputlisting[language=c, caption=LED Adressen des LMMs]{src/LEDAdressen.c}
 			Um diese Adressen mit den Eingegangenen zu vergleichen wird eine Schleife verwendet, die jede Eingegangene Adresse einzeln mit jeder Vordefinierten Adresse vergleicht. Passen alle Adressen wird eine Nachricht mit LMM-ID und Den zu toggelnden LEDs zusammengesetzt und diese wird im Anschluss versendet. \hfill \break
-			Stimmen nicht alle Adressen, werden die falschen weggelassen und nur die Korrekten werden in das Adressen, ID PAket eingefügt, im Anschluss wird die Nachricht dann versendet. \hfill \break
+			Stimmen nicht alle Adressen, werden die falschen weggelassen und nur die Korrekten werden in das Adressen, ID Paket eingefügt, im Anschluss wird die Nachricht dann versendet. \hfill \break
 			Sollten keine der Adressen stimmen, wird gar keine CAN-Nachricht versendet, da es ja auch keine Veränderung am LMM bringen würde.
 			\newpage
 			
@@ -515,7 +525,7 @@
 %% Zeitaufzeichnungen Hintermeier ======================%%
 \newpage
 \markright{Zeitaufzeichnungen Hintermeier}
-\includepdf[pages=-, pagecommand={\phantomsection\addcontentsline{toc}{chapter}{Zeitaufzeichnungen Hintermeier}}]{form/dummy.pdf}
+\includepdf[pages=-, pagecommand={\phantomsection\addcontentsline{toc}{chapter}{Zeitaufzeichnungen Hintermeier}}]{form/Zeit_hintermeier.pdf}
 %%======================================================%%
 
 %% Zeitaufzeichnungen Gansch ===========================%%
