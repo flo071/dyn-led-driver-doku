@@ -285,13 +285,13 @@
 			Oben abgebildet ist die Grundbeschaltung des SEPIC-Chip LT3757. Das RC-Netzwerk bei dem VC-Pin hält die Spannung für die Erzeugung der Internen Spannung stabil erzeugt wird stabil gehalten werden kann. Am RT-Pin wird mittels des Wiederstandes eine Schaltfrequenz eingestellt. Der Pin INTVCC ist da um die Spannungen für die Interne Versorgung und das Gate stabil zu halten.
 			\paragraph{Undervoltage Shutdown für SEPIC}
 			\begin{adjustbox}{center,caption={Undervoltage Shutdown Schaltung für LT3757},label={fig:uvlo},nofloat=figure,vspace=\bigskipamount}
-				\includegraphics[height=6cm]{img/Undervolteage_Shutdown_SEPIC.PNG}
+				\includegraphics[width=\textwidth]{img/Undervolteage_Shutdown_SEPIC.PNG}
 			\end{adjustbox}
 			Dieser Teil der Schaltung ist dafür zuständig, dass die Spannung am Eingang überprüft wird, wenn die Spannung zu klein ist, wird der SEPIC-Chip deaktiviert um keine Schäden verursachen zu können.
 			\pagebreak
 			\paragraph{Feedback Schaltung für SEPIC}
 			\begin{adjustbox}{center,caption={Feedback Schaltung für SEPIC},label={fig:feedback},nofloat=figure,vspace=\bigskipamount}
-				\includegraphics[height=6cm]{img/Feedback_SEPIC.PNG}
+				\includegraphics[width=\textwidth]{img/Feedback_SEPIC.PNG}
 			\end{adjustbox}
 			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird. Eingestellt wird die Schaltfrequenz mit dem Spannungsteiler von R203 und R204/R213, welcher Verwendet wird, hängt von der Jumper Einstellung ab, es soll immer so sein, dass die Spannung am FBX-PIN 1,6 Volt beträgt.
 			
@@ -304,14 +304,15 @@
 			\pagebreak
 			\paragraph{Negative Spannung}
 			\begin{adjustbox}{center,caption={Schaltung für Versorgung von OPV der Stromquelle},label={fig:neg-spg},nofloat=figure,vspace=\bigskipamount}
-				\includegraphics[height=9cm]{img/Negative_Spannung.PNG}
+				\includegraphics[width=\textwidth]{img/Negative_Spannung.PNG}
 			\end{adjustbox}
 			Diese Schaltung dient dazu, eine Spannung zu erzeugen, die immer 8,2V unter der Spannung von (OUT) liegt. Die niedrigere Spannung liegt an dem Punkt U-Neg-OUT. In einer Simulation in Abbildung \ref{fig:LTSpice-Simulation-1} kann man den Spannungsunterschied zwischen V(out) und V(uneg) sehen.
+			\newpage
 			\paragraph{Stromquelle}
 			\begin{adjustbox}{center,caption={Schaltung für die Einstellbare Stromquelle},label={fig:stromquelle},nofloat=figure,vspace=\bigskipamount}
-				\includegraphics[height=8cm]{img/Stromquelle_SEPIC.PNG}
+				\includegraphics[width=\textwidth]{img/Stromquelle_SEPIC.PNG}
 			\end{adjustbox}
-			Bei dieser Schaltung wird ein Stromspiegel verwendet um den Strom mit dem ADC des Mikrocontrollers messen zu können. Weiters wird der maximale Strom mit der Spannung am Plus Eingang des OPV (U203) mit dem DAC des Mikrocontrollers eingestellt.
+			Bei dieser Schaltung wird ein Stromspiegel verwendet um den Strom mit dem ADC des Mikrocontrollers messen zu können. Weiters wird der maximale Strom mit der Spannung am Plus Eingang des OPV (U203) mit dem DAC des Mikrocontrollers eingestellt.\newpage
 			
 		\subsection{Simulation}
 			Mithilfe von LTSpice war es möglich, die Schaltung zu Analysieren und ihre ungefähren Eigenschaften gut herauszufinden. Es wurden Spannungsverläufe und auch Zeiten damit herausgefunden, die einen wichtigen beitrag zur Vorbeireitung auf die PRogrammierung geleistet haben.
@@ -390,16 +391,16 @@
 	\section{Digitalteil}
 		\subsection{Schaltung}
 		\begin{adjustbox}{center,caption={Mikrocontroller Grundbeschaltung},label={fig:uC Grundbeschaltung},nofloat=figure,vspace=\bigskipamount}
-			\includegraphics[height=12cm]{img/Grundbeschaltung_uC.PNG}
+			\includegraphics[width=\textwidth]{img/Grundbeschaltung_uC.PNG}
 		\end{adjustbox}
 	Fast alle passiven Bauelemente welche in der Abbildung \ref{fig:uC Grundbeschaltung} zu sehen sind werden für die Grundfunktionen benötigt. Die Kondensatoren (C110 \& C111) beim 16MHz Quarz (X101) werden für den internen Oszillator benötigt. Für die Stabilität des internen LDO wurden die Kondensatoren mit 100nF \& 470pF dimensioniert.
 	Alle anderen Kondensatoren sind Stützkondensatoren. Die Taster (T101 \& T101) werden für die Programmierung oder auch für den Reset des Mikrocontrollers benötigt. Die Programmierung erfolgt über USB und als physikalische Schnittstelle wurde eine Mikro-USB Buchse gewählt. RXD und TXD sind die Datenleitungen zum CAN-Transceiver. 
 		\begin{adjustbox}{center,caption={CAN-Transceiver},label={fig:CAN-Transceiver},nofloat=figure,vspace=\bigskipamount}
-		\includegraphics[height=5cm]{img/CAN_Tranceiver.PNG}
+		\includegraphics[width=\textwidth]{img/CAN_Tranceiver.PNG}
 		\end{adjustbox}
 	Für die Steuerung des Analogteils wurde ein Digitales-Poti verwendet welches über die SPI-Schnittstelle angesteuert wird, des weiteren werden der interne DAC und ADC auch für die Steuerung des Regelkreises mit eingebunden. Für die Versorgung wurde die Betriebsspannung auf 5V geregelt.
 	\begin{adjustbox}{center,caption={VoltageRegulator 7805 },label={fig:VoltageRegulator.PNG},nofloat=figure,vspace=\bigskipamount}
-		\includegraphics[height=5cm]{img/VoltageRegulator.PNG}
+		\includegraphics[width=\textwidth]{img/VoltageRegulator.PNG}
 	\end{adjustbox}
 	\newpage
 	
