@@ -1,7 +1,9 @@
 void adc_init(void) {
 	// GPIO Ports initialisieren
 	AVR32_GPIO.port[0].gper = 0 << 8;
-	AVR32_GPIO.port[0].pmr0 = 0; AVR32_GPIO.port[0].pmr1 = 0; AVR32_GPIO.port[0].pmr2 = 0; // PORT A PIN 8 MODE A
+	AVR32_GPIO.port[0].pmr0 = 0; 
+	AVR32_GPIO.port[0].pmr1 = 0; 
+	AVR32_GPIO.port[0].pmr2 = 0; // PORT A PIN 8 MODE A
 	
 	// Interne Register initialisieren
 	AVR32_ADCIFA.CR.tstart = 1;
