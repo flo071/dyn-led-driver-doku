@@ -423,7 +423,26 @@
 	\newpage
 	
 	\section{Hardware}\hfill \break
+	Die Firma ZKW möchte für zahlreiche in Entwicklung und bereits in Produktion befindliche LED Einheiten einen universell einsetzbaren LED Treiber mit linear einstellbarem Strom. Es gibt bereits viele Stromquellen, welche auch sehr effizient sind, jedoch nur jeweils für den dafür entwickelten Scheinwerfer. 
+	Das Ziel liegt darin, eine geeignete Hardware zu entwickeln, welche von der Baugröße gut handhabbar ist und über ein UCD gesteuert werden kann.
+	Die Spannung kann anwendungsspezifisch hoch- und herunter-gewandelt werden. Wobei diese von der Anzahl der in serie geschalteten LEDs abhängt z.B.  wenn 9 LEDs in Serie geschaltet sind, entspricht das bei einer Nennspannung von 3,2V (pro LED) 28,8V.
+	Der Strom kann auch anwendungsspezifisch eingestellt werden, das heißt die Schaltung liefert nur bis zu einen begrenzten Wert Strom z.B. 1,25A.
 		\subsection{PCB}\hfill \break
+		Folgende Dinge wurden beim Design beachtet:
+		\hfill \break 
+		\begin{center}
+			\begin{minipage}{0.5\textwidth}
+				\begin{itemize}
+					\item größentechnisch praktikables Design (Eurokartenformat)
+					\item Benutzerfreundlichkeit (Beschriftungen)
+					\item Platz für möglicherweise benötigte Entstörbauteile (Filter)
+					\item Kühlflächenplatz reserviert
+					\item Designrules von PCB-Hersteller
+					\item Designrules von Bauteilhersteller
+				\end{itemize}
+			\end{minipage}
+		\end{center}
+		\hfill \break
 	\newpage
 	
 	\ifoot{Florian Hintermeier}	
