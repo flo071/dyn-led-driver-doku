@@ -98,7 +98,7 @@
 %%======================================================%%
 
 %% eidesstattliche erklärung ===========================%%
-\includepdf[pages=-]{form/eid.pdf}
+%%\includepdf[pages=-]{form/eid.pdf}
 %%======================================================%%
 
 %% danksagungen=========================================%%
@@ -143,7 +143,10 @@
         Dieser Teil wird von Florian Hintermeier entwickelt. Der Analogteil enthält die Schaltung um die Angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen. Die Einstellungen werden von dem Mikrocontroller vom Digitalteil über den DAC eingestellt.
         
         \subsection{Digitalteil}
-        Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.% Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
+        Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.
+          % Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
+        \subsection{PCB-Entwicklung}
+        Das printed-circuit-board wird von Dominik Gansch designed. Anforderungen sind ein größentechnisch praktikables Design, welches aber keine Einschränkung in der Handhabung der Hardware bietet. Das heißt es wird auf Benutzerfreundlichkeit beim Design geachtet (Massebügel für Messungen, zusätzliche Lötpads für Tiefpasskondensatoren, usw.) ohne jedoch technische Nachteile hervorzurufen.
     \section{Software}
     	\subsection{Initialisierungen}
     	Dieses Teilgebiet der Softwareentwicklung wird von Florian Hintermeier umgesetzt. Es beschränkt sich auf die Initialisierung der Internen, sowohl auch der Peripherie Funktionalitäten des Mikrocontrollers.
@@ -151,7 +154,10 @@
     	Dieses Gebiet wird ebenfalls von Florian Hintermeier entwickelt. Es handelt sich hierbei um die Kommunikation zwischen User Controlled Device von ZKW mit dem LED-Treiber und des des weiteren um die Kommunikation zwischen Treiber und LED Matrix Manager.
     	Die Kommunikation zum UCD stellt die Grundeinstellungen des Treibers zur Verfügung und diese werden dann umgesetzt und an den LMM weitergegeben.
     	\subsection{Serial Peripheral Interphase}
+    	Die SPI kommunikation zwischen Mikrocontroller und Digitalen-Potentiometer wird von Dominik Gansch abgehandelt. Mithilfe des Digitalen-Potentiometers wird die Ausgangsspannung des Schaltwandlers eingestellt. Das Potentiometer wird in der Spannungsregelung, als Spannungsteiler der Regelschleife des Schaltwandlers, verwendet.
     	\subsection{ADC/DAC Einstellungen}
+    	Die Programmierung der analogen Hardware des Mikrocontrollers (ADC,DAC) wird von Dominik Gansch umgesetzt. Der ADC misst an einen Shunt-Widerstand die aktuelle Strombelastung am Ausgang des Schaltwandlers. Eingestellt wird der maximale Ausgangsstrom über eine Analogschaltung welche mithilfe des DAC gesteuert wird.
+    	Mit dieser Methode der Stromeinstellung und Strommessung wird der Ausgangsstrom des Schaltwandlers, über die programmierte Software, geregelt.
 
 \chapter{Grundlagen und Methoden}
 	\section{Verwendete Software}
@@ -378,19 +384,21 @@
 			
 			
 	\section{Digitalteil}
+	Als perfekte Wahl stellte sich der AT32UC3C2512C von Microchip heraus. Dieser erfüllt alle Anforderungen und ist noch dazu Preiswert. Die Grundbeschaltung wurde aus den Empfehlungen des Datenblattes erstellt und anwendungsspezifisch erweitert.
 		\subsection{Schaltung}
 		\begin{adjustbox}{center,caption={Mikrocontroller Grundbeschaltung},label={fig:uC Grundbeschaltung},nofloat=figure,vspace=\bigskipamount}
 			\includegraphics[height=12cm]{img/Grundbeschaltung_uC.PNG}
 		\end{adjustbox}
 	Fast alle passiven Bauelemente welche in der Abbildung \ref{fig:uC Grundbeschaltung} zu sehen sind werden für die Grundfunktionen benötigt. Die Kondensatoren (C110 \& C111) beim 16MHz Quarz (X101) werden für den internen Oszillator benötigt. Für die Stabilität des internen LDO wurden die Kondensatoren mit 100nF \& 470pF dimensioniert.
-	Alle anderen Kondensatoren sind Stützkondensatoren. Die Taster (T101 \& T101) werden für die Programmierung oder auch für den Reset des Mikrocontrollers benötigt. Die Programmierung erfolgt über USB und als physikalische Schnittstelle wurde eine Mikro-USB Buchse gewählt. RXD und TXD sind die Datenleitungen zum CAN-Transceiver. 
+	Alle anderen Kondensatoren sind Stützkondensatoren. Die Taster (T101 \& T101) werden für die Programmierung oder auch für den Reset des Mikrocontrollers benötigt. Die Programmierung erfolgt über USB und als physikalische Schnittstelle wurde eine Mikro-USB Buchse gewählt. Für die Spannungsteuerung des Analogteils wurde ein Digitales-Poti verwendet welches über die SPI-Schnittstelle (MISO/SDI und MOSI/SDO) angesteuert wird, des weiteren werden der interne DAC und ADC auch für die Stromregelung verwendet.
 		\begin{adjustbox}{center,caption={CAN-Transceiver},label={fig:CAN-Transceiver},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[height=5cm]{img/CAN_Tranceiver.PNG}
 		\end{adjustbox}
-	Für die Steuerung des Analogteils wurde ein Digitales-Poti verwendet welches über die SPI-Schnittstelle angesteuert wird, des weiteren werden der interne DAC und ADC auch für die Steuerung des Regelkreises mit eingebunden. Für die Versorgung wurde die Betriebsspannung auf 5V geregelt.
+	RXD und TXD sind die Datenleitungen zum CAN-Transceiver. 
 	\begin{adjustbox}{center,caption={VoltageRegulator 7805 },label={fig:VoltageRegulator.PNG},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[height=5cm]{img/VoltageRegulator.PNG}
 	\end{adjustbox}
+ Die Versorgungsspannung von 10...15V wurde mithilfe eines Low Drop Regulators (LDO) auf die Betriebsspannung (5V) der digitalen Bauteile geregelt. Die Diode (D101) und die selbstrückstellende Sicherung (F101) wurden als Schutzmaßnahmen integriert.
 	\newpage
 	
 	\section{Hardware}
