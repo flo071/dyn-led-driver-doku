@@ -153,7 +153,7 @@
         Dieser Teil wird von Florian Hintermeier entwickelt. Der Analogteil enthält die Schaltung um die angeforderten Spannungen und Ströme erzeugen zu können, die von einem Mikrocontroller eingestellt werden sollen. Die Einstellungen werden von dem Mikrocontroller vom Digitalteil über den DAC eingestellt.
         
         \subsection{Digitalteil}\hfill \break
-        Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle werden vom Mikrocontrollerinternen DAC die Stromregelungsreferenz eingestellt bzw. sendet der Mikrocontroller die entsprechenden Lichtbilder an die LMMs.
+        Dieser Teil wird von Dominik Gansch entwickelt. Der Digitalteil dient als zentrale Steuerungseinheit. Das Kernstück des Digitalteils besteht aus dem Mikrocontroller welcher über CAN-Bus Befehle, von der ZKW-Application, bestimmte Kommandos erhält. Mithilfe der  CAN-Befehle kann die Stromregelungsreferenz für den Schaltwandler am Mikrocontrollerinternen DAC eingestellt werden oder entsprechenden Lichtbilder an die LMMs umgesetzt werden.
           % Die CAN-Befehle kann man in zwei Gruppen einteilen, in Befehle für die LMMs und in Stromregelungsbefehle. Für jedes LMM-Kommando gibt es im Mikrocontroller eine entsprechende Lichtbild-Ablauf-Tabelle, diese Daten der Tabelle werden, nach erhalten des dafür entsprechenden Befehls, laufend zu den LMMs gesendet und von diesen umgesetzt, bis der Lichbild-Ablauf abgeschlossen ist. Befehle für die Stromregelung werden mithilfe des internen DACs in einen Spannungsreferenzwert für die Stromregelung umgesetzt. %
         \subsection{PCB-Entwicklung}\hfill \break
         Das printed-circuit-board wird von Dominik Gansch designed. Anforderungen sind ein größentechnisch praktikables Design, welches aber keine Einschränkung in der Handhabung der Hardware bietet. Das heißt es wird auf Benutzerfreundlichkeit beim Design geachtet (Massebügel für Messungen, zusätzliche Lötpads für Tiefpasskondensatoren, usw.) ohne jedoch technische Nachteile hervorzurufen.
@@ -164,7 +164,7 @@
    		\subsection{Controller Area Network}\hfill \break
    		Dieses Gebiet wird ebenfalls von Florian Hintermeier entwickelt. Es handelt sich hierbei um die Kommunikation zwischen User Controlled Device von ZKW mit dem LED-Treiber und des weiteren um die Kommunikation zwischen Treiber und LED Matrix Manager.
    		Die Kommunikation zum UCD stellt die Grundeinstellungen des Treibers zur Verfügung und diese werden dann umgesetzt und an den LMM weitergegeben.
-   		\subsection{Serial Peripheral Interface}\hfill \break
+   		\subsection{Serial Peripheral Interface}\label{SPIInit}\hfill \break
     	Die SPI kommunikation zwischen Mikrocontroller und Digitalen-Potentiometer wird von Dominik Gansch abgehandelt. Mithilfe des Digitalen-Potentiometers wird die Ausgangsspannung des Schaltwandlers eingestellt. Das Potentiometer wird in der Spannungsregelung, als Spannungsteiler der Regelschleife des Schaltwandlers, verwendet.
     	\subsection{ADC/DAC Einstellungen}\hfill \break
     	Die Programmierung der analogen Hardware des Mikrocontrollers (ADC,DAC) wird von Dominik Gansch umgesetzt. Der ADC misst an einen Shunt-Widerstand die aktuelle Strombelastung am Ausgang des Schaltwandlers. Eingestellt wird der maximale Ausgangsstrom über eine Analogschaltung welche mithilfe des DAC gesteuert wird.
@@ -439,16 +439,19 @@
 					\item Kühlflächenplatz reserviert
 					\item Designrules von PCB-Hersteller
 					\item Designrules von Bauteilhersteller
+					\item Massebügel, für Messungen
+					\item Leiterbahnen mit hoher Strombelastung möglichst kurz zu halten
 				\end{itemize}
 			\end{minipage}
 		\end{center}
 		\hfill \break
-		Die größe des PCBs beträgt 85 mm x 70mm, so finden mehrere Module auf einer Eurokarte Platz. Da auf Benutzerfreundlichkeit geachtet wurde ist jeder Ein-, Ausgangsstecker und jedes Potentiometer nach deren Funktion beschriftet. Auch wurden zusätzliche Lötpads (R207) an Teilen der Schaltung hinzugefügt wo möglicherweise Störungen auftreten können. So kann man die Schaltung, Hardwareseitig, auch nachträglich noch durch Filter optimieren. Der Kühlflächenplatz wurde so gelöst das sich diese auf der kompletten Rückseite des PCBs befindet (Kühlung des Mosfets FET201). Das heißt die komplette Rückseite ist mit einen Kühlkörper belegt. Dies ist möglich da das PCB so designt wurde das auf dieser Seite keine Bauteile montiert werden. Damit es zu möglichst keinen Komplikationen kommt wurde auf Designrules seitens des PCB-Herstellers und der Bauteilhersteller geachtet. Auch wurde beachtet das auf Leitungen mit hoher Strombelastung möglichst kurz und breit gehalten werden. All das kann man in \ref{fig:Ausschnitt des PCB-Designs} feststellen.\hfill \break 
+		Die größe des PCBs beträgt 85 mm x 70mm, so finden mehrere Module auf einem PCB im Eurokartenformat Platz. Da auf Benutzerfreundlichkeit geachtet wurde ist jeder Ein-, Ausgangsstecker und jedes Potentiometer nach deren Funktion beschriftet. Auch wurden zusätzliche Lötpads (R207) an Teilen der Schaltung hinzugefügt wo möglicherweise Störungen auftreten können. So kann man die Schaltung, Hardwareseitig, auch nachträglich noch durch Filter optimieren. Der Kühlflächenplatz wurde so gelöst das sich diese auf der kompletten Rückseite des PCBs befindet (Kühlung des Mosfets FET201). Das heißt die komplette Rückseite ist mit einen Kühlkörper belegt. Dies ist möglich da das PCB so designt wurde das sich auf dieser Seite nur der Stromregel-Mosfet (FET201 im linearbetrieb) befindet. Damit es zu möglichst keinen Komplikationen kommt wurde auf Designrules des PCB-Herstellers und der Bauteilhersteller geachtet. Auch wurde beachtet das auf Leiterbahnen mit hoher Strombelastung möglichst kurz und breit gehalten werden. All das kann man in Abbildung \ref{fig:Ausschnitt des PCB-Designs} feststellen.\hfill \break 
 	\newpage
 	\begin{adjustbox}{center,caption={Ausschitt des Designs },label={fig:Ausschnitt des PCB-Designs},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[width=\textwidth]{img/PCB-Design.PNG}
 	\end{adjustbox}
-	\ifoot{Florian Hintermeier}	
+	Alles in Gelb ist am Finalen PCB in einer kontrastreichen Farbe.
+	\ifoot{Dominik Gansch, Florian Hintermeier}	
 	\section{Software}\hfill \break
 		\subsection{Programmablauf}\hfill \break
 		Um die Programmierung bestmöglich umsetzen zu können, ist es sinnvoll einen Programmablaufplan zu erstellen, mithilfe davon ist es einfacher Abläufe des Programms zu Planen und diese auch nachzuvollziehen und zu verstehen.
@@ -552,20 +555,52 @@
 			\newpage
 			
 		\ifoot{Dominik Gansch}
-		\subsection{Serial Peripheral Interface}\hfill \break
-			Das Digitale-Potentiometer benutzt SPI zur Datenübertragung zwischen dem Mikrocontroller.
-			\subsubsection{Digitales Potentiometer}
+			\subsection{Digitales Potentiometer}\hfill \break
+			Als Digitales Potentiometer wurde das MCP4251 gewählt da es sich für unsere Anforderungen als passend herausstellte.
+				\subsubsection{Serial Peripheral Interface}\hfill \break
+			Das Digitale-Potentiometer benutzt SPI zur Datenübertragung zwischen dem Mikrocontroller. Die Initialisierung wird im Kapitel, \ref{SPIInit} Serial Peripheral Interface, abgehandelt.
+			\subsection{Einstellung der Ausgangsspannung}\hfill \break
+			Damit die Ausgangsspannung des Schaltwandlers eingestellt werden kann, wurde im Spannungsteiler, des Regelkreises, ein Digitales-Potentiometer verwendet, welches über SPI mithilfe des Mikrocontrollers angesteuert wird. Mit verschiedenen Widerstandskombinationen können so die benötigten Ausgangsspannungen realisiert werden.
 			Als Digitales Potentiometer wurde das MCP4251 von Microchip verwendet.\hfill \break
-			\begin{adjustbox}{center,caption={MCP4251},label={fig:MCP4251},nofloat=figure,vspace=\bigskipamount}
-				\includegraphics[width=\textwidth]{img/MCP4251.jpg}
+			\begin{adjustbox}{center,caption={SPI Übertragung Ablauf},label={fig:SPIUebertragung},nofloat=figure,vspace=\bigskipamount}	
+			\includegraphics[width=\textwidth]{img/SPIUebertragung.png}
 			\end{adjustbox} \hfill \break
+			Ich möchte hier näher auf den im Flussdiagramm dargestellten Programmablauf eingehen.\hfill \break
+			Kommen Daten für eine neue Ausgangsspannung werden diese in das Transmit Data  Register (TDR-Register) geladen. Wenn in dieses Register ein neuer Wert gespeichert wurde, wird das Slave-Select-Bit im I/O-Register, für den Zeitraum der Übertragung, auf Logisch Null gesetzt. Mit einer while-Schleife wird abgewartet bis die Übertragung zu ende ist.
+			
+			\begin{adjustbox}{center,caption={while-Schleife abwarten, Zeile: 17},label={fig:while-Schleife abwarten, Zeile: 17},nofloat=figure,vspace=\bigskipamount}	
+			\includegraphics[width=\textwidth]{img/SPITransmit.png}
+			\end{adjustbox} \hfill \break
+		
+			\begin{adjustbox}{center,caption={SPI Protokoll des MCP4251},label={fig:SPIProtokoll},nofloat=figure,vspace=\bigskipamount}	
+				\includegraphics[width=\textwidth]{img/SPI_Protokoll_MCP4251.png}
+			\end{adjustbox} \hfill \break
+			
+			Hier ist ein Beispielablauf einer Übertragung angeführt zum Zweck einer leichteren Nachvollziehbarkeit.
+			
+		\subsection{Digital Analog Converter}\hfill \break
+			Der Mikrocontrollerinterne DAC wird verwendet um die analoge Strombegrenzung zu steuern. Der interne DAC (12Bit Auflösung, Uout: 0...Vcc) stellte sich als passend heraus da dieser weder schnell noch hochgenau sein musste. 
+			
+			Data Register Channel 0 
+		\subsection{Analog Digital Converter}\hfill \break
+		Der Mikrocontrollerinterne ADC wird verwendet um den Ausgangsstrom zu messen. So kann man die aktuelle Strombelastung messen und auch Stromspitzen, im Rahmen der ADC Messgeschwindigkeit, feststellen.
+		
+		\newpage
+		\subsection{Einstellung des maximalen Ausgangsstroms}\hfill \break
+		
+		\begin{adjustbox}{center,caption={Ausgangsstromeinstellung},label={fig:Ausgangsstrombegrenzung},nofloat=figure,vspace=\bigskipamount}
+			\includegraphics[height=18cm]{img/Ausgangsstrombegrenzung.png}
+		\end{adjustbox}
+		
+		Wenn  am CAN-Bus, vom UCD, der Befehlt kommt das ein neuer maximaler Ausgangsstrom einzustellen ist, startet folgender Programmablauf.\hfill \break
+		Als erstes wird de einzustellende Strom ausgewertet. Im nächsten Schritt wird der Strom (\(I_{outMAX}\)) in einen einzustellenden Spannungswert (\(U_{DAC}\)) umgerechnet. \hfill \break
+		\textbf{Die Formel:} 
+		\begin{align*} 
+		U_{DAC} = \frac{10}{3} \cdot I_{outMAX}
+		\end{align*}
+		Die berechneten Daten werden anschließend in das Channel-0-Register geladen. Nachdem die Daten gespeichert wurden, stellt der DAC die neue Spannung ein. \hfill \break
+		Danach wird mit dem ADC am Shuntwiderstand die Strombelastung des Ausgangs gemessen. Anschließend wird der Messwert ausgewertet, je nach gewünschter Ausgangsbelastung kann das Ergebnis variieren. Ist der gewünschte Ausgangsstrom eingestellt endet der Ablauf, wenn nicht beginnt der Programmablauf von neuen mit einen korrigierten Wert. Die Korrektur übernimmt das UCD.
 			\newpage
-	%	\subsection{Digital Analog Converter}\hfill \break
-		%	\subsubsection{Grundlagen zum DAC}\hfill \break
-	%		\newpage
-	%	\subsection{Analog Digital Converter}\hfill \break
-	%		\subsubsection{Grundlagen zum ADC}\hfill \break
-	%		\newpage
 \ifoot{Florian Hintermeier}	
 \chapter{Betriebswirtschaftliche Kalkulation}\hfill \break
 Die Betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem Unternehmen oder wie in diesem Fall einem Projekt. Hier werden die Berechnungen so aufgestellt, als würde dieses Projekt von einem Kleinunternehmen hergestellt werden. 
@@ -695,7 +730,7 @@ Die Betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem
 \includepdf[pages=1,angle=90, scale=0.9, pagecommand={\phantomsection\addcontentsline{toc}{chapter}{Schaltung Digitalteil}}]{schaltungen/Dynamic_LED_Driver.pdf}
 \newpage
 \markright{Schaltung Analogteil}
-\ifoot{Florian Hintermeier}
+\ifoot{Dominik Gansch}
 \includepdf[pages=2,angle=90, scale=0.9, pagecommand={\phantomsection\addcontentsline{toc}{chapter}{Schaltung Analogteil}}]{schaltungen/Dynamic_LED_Driver.pdf}
 \newpage
 \markright{Bauteilliste}
