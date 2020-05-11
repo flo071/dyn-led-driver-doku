@@ -98,7 +98,7 @@
 %%======================================================%%
 
 %% eidesstattliche erklärung ===========================%%
-%%\includepdf[pages=-]{form/eid.pdf}
+\includepdf[pages=-]{form/eid.pdf}
 %%======================================================%%
 
 %% danksagungen=========================================%%
@@ -181,11 +181,11 @@
 	\paragraph{Altium Designer 19}\hfill \break
 	Eines der Hauptziele von Altium ist es, eine integrierte Entwicklungslösung zur Elektronikentwicklung anzubieten.
 	Altium Designer beinhaltet die Schaltbildeingabe, einen PCB Layout Editor mit Integritätsanalyse sowie eine auf SPICE-Modellen gestützte Schaltungssimulation.\footnote{https://de.wikipedia.org/wiki/Altium\_Designer}\\
-	In diesem Projekt wurde es dazu verwendet, um die Schaltungen zu Zeichnen und das PCB damit zu erstellen.
+	In diesem Projekt wurde es dazu verwendet, um die Schaltungen zu zeichnen und das PCB damit zu erstellen.
 	\paragraph{TeXstudio}\hfill \break
 	TeXstudio ist ein LaTeX-Editor für Windows, Linux, BSD und (Mac) OS X. Er ist open source und basiert auf Texmaker. Wie andere bekannten LaTeX-Editoren bietet auch er die grundlegende Unterstützung beim Einfügen von LaTeX-Befehlen, Syntax-Hervorhebung, eine integrierte Vorschaufunktion und eine Projektfunktion.\footnote{https://latex.tugraz.at/programme/texstudio}
 	\paragraph{MiKTEX}\hfill \break
-	MiKTEX ist die benötigte erweiterung für TeXstudio um Aus dem LaTeX-Syntax ein PDF erstellen zu können. Es ist sozusagen der Übersetzer von tex zu PDF. \newpage
+	MiKTEX ist die benötigte erweiterung für TeXstudio um aus dem LaTeX-Syntax ein PDF erstellen zu können. Es ist sozusagen der Übersetzer von tex zu PDF. \newpage
 	\paragraph{Atmel Studio}\hfill \break
 	Das Atmel Studio (vor Version 6: "AVR Studio") ist eine kostenlose Entwicklungsumgebung (IDE) für die Programmierung der AVR-Mikrocontroller und ARM-Mikrocontroller (ab Version 6) von Atmel. Sie basiert ab Version 5 auf der Visual Studio Shell von Microsoft und besteht aus einer Projektverwaltung, einem Editor, einem Debugger und Werkzeugen zum Beschreiben der Mikrocontroller.\footnote{https://www.mikrocontroller.net/articles/Atmel\_Studio}
 	\paragraph{GeoGebra}\hfill \break
@@ -195,7 +195,7 @@
 	\newpage
 	
 	\section{Basis des Analogteils}\hfill \break
-	Die Basis des Analogteils bildet eine SEPIC Schaltung für die Erzeugung der gewünschten Ausgangsspannung, das Funktionsprinzip davon wird unten beschrieben. Einen weiteren Teil bildet allerdings die Stromquelle, mit der man den maximalen Ausgangsstrom einstellen kann, es ist möglich, diesen Mittels Mikrocontroller oder Potentiometer einzustellen.
+	Die Basis des Analogteils bildet eine SEPIC Schaltung für die Erzeugung der gewünschten Ausgangsspannung, das Funktionsprinzip davon wird unten beschrieben. Einen weiteren Teil bildet allerdings die Stromquelle, mit der man den maximalen Ausgangsstrom einstellen kann. Es ist möglich, diesen mittels Mikrocontroller oder Potentiometer einzustellen.
 	\paragraph{SEPIC Funktionsprinzip}\footnote{https://www.elektroniknet.de/elektronik-automotive/sonstiges/sepic-wandler-fuer-automotive-anwendungen-1571.html}\hfill \break
 	Die Anstiegszeit der Ströme IL1 und IL2 hängen von der Eingangsspannung und von den Induktivitätswerten der Spulen ab. Wenn der Schalter (Q) geschlossen wird, liegt an L1 die Eingangsspannung und an Cs eine Spannung, die genau so groß wie die Eingangsspannung ist. Der Strom steigt in den Spulen L1 und L2 an und Energie wird in den Spulen gespeichert. In dieser Zeit wird die Diode D in Sperrrichtung betrieben und der Ausgangskondensator muss den Strom für die angeschlossene Last liefern. Wenn der Schalter geöffnet wird, kehrt sich die Polarität der Spannung an den Spulen um. Die Diode leitet nun die gespeicherte Energie an den Ausgangskondensator und an die angeschlossene Last.
 	\begin{adjustbox}{center,caption={Prinzipschaltung eines SEPIC-Converters},label={fig:SEPIC-Prinzipschaltung},nofloat=figure,vspace=\bigskipamount}
@@ -268,7 +268,7 @@
 	\end{itemize}
 	Das math.h Headerfile wird benötigt, um die Berechnungen, die für die Spannungseinstellungen nötig sind bewerkstelligen zu können. \hfill \break
 	Im io.h Headerfile finden sich alle wichtigen Definitionen bezüglich der 32-Bit AVR Mikrocontroller, im Makefile des Projekts wird der Verwendeter Mikrocontroller festgelegt, so kann der C-Compiler dann alle wichtigen Definitionen, wie Ports und Register finden und dem HEX-Code für den Controller richtig zuordnen. \hfill \break
-	Das Makefile und die anderen Projektspezifischen Daten für ein Mikrocontroller Projekt werden von Atmel Studio nach der Konfiguration der Einstellungen erstellt. In diesen Einstellungen werden sowohl Taktfrequenz als auch Taktquelle eingestellt.
+	Das Makefile und die anderen projektspezifischen Daten für ein Mikrocontroller Projekt werden von Atmel Studio nach der Konfiguration der Einstellungen erstellt. In diesen Einstellungen werden sowohl Taktfrequenz als auch Taktquelle eingestellt.
 	\newpage
 	
 		
@@ -289,7 +289,7 @@
 			\end{adjustbox}
 			\pagebreak
 			\subsubsection{Altium}\hfill \break
-			Die Schaltung in Altium wurde für eine bessere Übersicht in mehrere Teile aufgeteilt. Um trotzdem die Verbindung zwischen den einzelnen Leitungen herzustellen wurden sogenannte Ports verwendet, das sind Verbindungen mit Gleichnamigen Kästchen. Wie man auf den einzelnen Schaltungselementen auch erkennen kann, wurde für den Analogteil der Zahlenbereich von 200 bis 299 für die Benennung der Bauteile verwendet. Dies dient zum besseren erkennen der Schaltungszugehörigkeit beim Entwickeln des PCBs.
+			Die Schaltung in Altium wurde für eine bessere Übersicht in mehrere Teile aufgeteilt. Um trotzdem die Verbindung zwischen den einzelnen Leitungen herzustellen wurden sogenannte Ports verwendet. Das sind Verbindungen mit gleichnamigen Kästchen. Wie man auf den einzelnen Schaltungselementen auch erkennen kann, wurde für den Analogteil der Zahlenbereich von 200 bis 299 für die Benennung der Bauteile verwendet. Dies dient zum besseren Erkennen der Schaltungszugehörigkeit beim Entwickeln des PCBs.
 			\paragraph{SEPIC}\hfill \break
 			\begin{adjustbox}{center,caption={Grundbeschaltung des LT3757},label={fig:LT3757-Grundbeschaltung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/SEPIC_Altium.PNG}
@@ -299,20 +299,20 @@
 			\begin{adjustbox}{center,caption={Undervoltage Shutdown Schaltung für LT3757},label={fig:uvlo},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Undervolteage_Shutdown_SEPIC.PNG}
 			\end{adjustbox}
-			Dieser Teil der Schaltung ist dafür zuständig, dass die Spannung am Eingang überprüft wird, wenn die Spannung zu klein ist, wird der SEPIC-Chip deaktiviert um keine Schäden verursachen zu können.
+			Dieser Teil der Schaltung ist dafür zuständig, dass die Spannung am Eingang überprüft wird, ist die Spannung zu klein, wird der SEPIC-Chip deaktiviert um keine Schäden verursachen zu können.
 			\pagebreak
 			\paragraph{Feedback Schaltung für SEPIC}\hfill \break
 			\begin{adjustbox}{center,caption={Feedback Schaltung für SEPIC},label={fig:feedback},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Feedback_SEPIC.PNG}
 			\end{adjustbox}
-			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird. Eingestellt wird die Schaltfrequenz mit dem Spannungsteiler von R203 und R204/R213, welcher Verwendet wird, hängt von der Jumper Einstellung ab, es soll immer so sein, dass die Spannung am FBX-PIN 1,6 Volt beträgt.
+			Dieser Teil ist zuständig für das Feedback der Spannung, die die Schaltfrequenz des FETs einstellt, über den auch die Ausgangsspannung eingestellt wird. Eingestellt wird die Schaltfrequenz mit dem Spannungsteiler von R203 und R204/R213, welcher der beiden verwendet wird, hängt von der Jumper Einstellung ab, es soll immer so sein, dass die Spannung am FBX-PIN 1,6 Volt beträgt.
 			
-			Die Z-Diode wird deshalb benötigt, weil die Spannung bei Änderung des Widerstandes höher werden kann, es wird dann vom LT3757 so geregelt, dass innerhalb kürzester Zeit wieder die gewollten 1,6V anliegen. Jedoch ist es für das digitale Potentiometer schädlich, wenn eine Spannung höher als die Versorgungsspannung anliegt. Deshalb wurde die Z-Diode verbaut, um die maximale Spannung, die anliegt auf 3,9V zu begrenzen.
+			Die Z-Diode wird deshalb benötigt, weil die Spannung bei Änderung des Widerstandes höher werden kann, es wird dann vom LT3757 geregelt, dass innerhalb kürzester Zeit wieder die gewollten 1,6V anliegen. Jedoch ist es für das digitale Potentiometer schädlich, wenn eine Spannung höher als die Versorgungsspannung anliegt. Deshalb wurde die Z-Diode verbaut, um die maximale Spannung, die anliegt auf 3,9V zu begrenzen.
 			\paragraph{Regelung für SEPIC}\hfill \break
 			\begin{adjustbox}{center,caption={Regelungsschaltung für LT3757},label={fig:regelung},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Regelung_SEPIC.PNG}
 			\end{adjustbox}
-			Der SENSE-PIN misst den Strom am FET, wenn der zu groß ist, wird ausgeschaltet. Die Spulen L1 und L2 sind gegengleich gekoppelt mit einem Verhältnis von 1 zu 1. Am Ausgang (OUT) liegt dann die mit den Widerständen von der Feedback Schaltung eingestellte Spannung.
+			Der SENSE-PIN misst den Strom am FET, wenn der zu groß ist, wird die Regelung ausgeschaltet. Die Spulen L1 und L2 sind gegengleich gekoppelt mit einem Verhältnis von 1 zu 1. Am Ausgang (OUT) liegt dann die mit den Widerständen von der Feedback Schaltung eingestellte Spannung.
 			\pagebreak
 			\paragraph{Negative Spannung}\hfill \break
 			\begin{adjustbox}{center,caption={Schaltung für Versorgung von OPV der Stromquelle},label={fig:neg-spg},nofloat=figure,vspace=\bigskipamount}
@@ -327,7 +327,7 @@
 			Bei dieser Schaltung wird ein Stromspiegel verwendet um den Strom mit dem ADC des Mikrocontrollers messen zu können. Weiters wird der maximale Strom mit der Spannung am Plus Eingang des OPV (U203) mit dem DAC des Mikrocontrollers eingestellt.\newpage
 			
 		\subsection{Simulation}\hfill \break
-			Mithilfe von LTSpice war es möglich, die Schaltung zu analysieren und ihre ungefähren Eigenschaften gut herauszufinden. Es wurden Spannungsverläufe und auch Zeiten damit herausgefunden, die einen wichtigen Beitrag zur Vorbereitung auf die Programmierung geleistet haben.
+			Mithilfe von LTSpice war es möglich, die Schaltung zu analysieren und ihre ungefähren Eigenschaften herauszufinden. Es wurden Spannungsverläufe und auch Zeiten damit ermittelt, die einen wichtigen Beitrag zur Vorbereitung auf die Programmierung geleistet haben.
 			\begin{adjustbox}{center,caption={Simulation der Schaltung Mittels LTSpice},label={fig:LTSpice-Simulation-1},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_1.PNG}
 			\end{adjustbox}
@@ -338,12 +338,11 @@
 			\end{align*} 
 			
 			Laut Simulation hat diese Schaltung eine Ausgangsleistung von 50W, was sogar mehr ist als angegeben. 
-			\ref{fig:LTSpice-Simulation-1} zu sehen, ist
 			\begin{adjustbox}{center,caption={Stabile Gate Spannung des MOSFETs},label={fig:LTSpice-Simulation-2},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/LTSpice_Simulation_2.PNG}
 			\end{adjustbox}
 			
-			Die Frequenz am GATE ist nach ca 2,75ms stabil, genauso wie V(out) in Abbildung \ref{fig:LTSpice-Simulation-1}. 
+			Die Frequenz am GATE ist nach ca 2,75ms stabil, genauso wie V(out) in Abbildung \ref{fig:LTSpice-Simulation-1} zu sehen, ist. 
 			
 			\subsubsection{Spannungseinstellung}\hfill \break
 			Um herauszufinden wie sich die Spannung bei Widerstandsänderung verändert, wurde dies auch mithilfe von LTSpice herausgefunden.
@@ -361,7 +360,7 @@
 				\includegraphics[width=\textwidth]{img/simulationSPG.PNG}
 			\end{adjustbox}
 		
-			In dem Diagramm kann man sehen, dass die Zeit bis die Ausgangsspannung stabil ist, immer kürzer wird, je näher man der Eingangsspannung kommt, diese war in diesem Fall 10V. Das liegt daran, dass die Schaltung weniger herunter oder hinauf wandeln muss, wenn die Ausgangsspannung der Eingangsspannung näher ist.
+			In dem Diagramm kann man sehen, dass die Zeit bis sich die Ausgangsspannung stabilisiert und immer kürzer wird, je näher man der Eingangsspannung kommt, diese war in diesem Fall 10V. Das liegt daran, dass die Schaltung weniger herunter oder hinauf wandeln muss, wenn die Ausgangsspannung der Eingangsspannung näher ist.
 		
 			\subsubsection{Ergebnisse der Simulationen}\hfill \break
 			{\large \textbf{Maximale Spannung:} 51,2V} \hfill \break
@@ -381,7 +380,7 @@
 			\begin{adjustbox}{center,caption={Berechneter Spannungsverlauf bei Widerstandsänderung},label={fig:berechnungSPG},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/berechnungSPG.PNG}
 			\end{adjustbox}
-			Im späteren Verlauf wird die Einzustellende Spannung bekannt gemacht, da man vom UCD die einzuschaltenden LEDs übertragen bekommt. Das heißt man muss in diesem Fall nicht nach der Ausgangsspannung Berechnen, da diese bekannt ist, sondern nach dem Widerstandswert. \hfill \break \hfill \break
+			Im späteren Verlauf wird die einzustellende Spannung bekannt gemacht, da man vom UCD die einzuschaltenden LEDs übertragen bekommt. Das heißt man muss in diesem Fall nicht nach der Ausgangsspannung berechnen, da diese bekannt ist, sondern nach dem Widerstandswert. \hfill \break \hfill \break
 			\textbf{Formel zur Berechnung des Widerstandswertes:}
 			\begin{align*} 
 			R=\frac{ U - 2 }{ 200 }^{ -\frac{ 1 }{ 1,1 } }
@@ -445,6 +444,7 @@
 			\end{minipage}
 		\end{center}
 		\hfill \break
+<<<<<<< HEAD
 		Die größe des PCBs beträgt 85 mm x 70mm, so finden mehrere Module auf einem PCB im Eurokartenformat Platz. Da auf Benutzerfreundlichkeit geachtet wurde ist jeder Ein-, Ausgangsstecker und jedes Potentiometer nach deren Funktion beschriftet. Auch wurden zusätzliche Lötpads (R207) an Teilen der Schaltung hinzugefügt wo möglicherweise Störungen auftreten können. So kann man die Schaltung, Hardwareseitig, auch nachträglich noch durch Filter optimieren. Der Kühlflächenplatz wurde so gelöst das sich diese auf der kompletten Rückseite des PCBs befindet (Kühlung des Mosfets FET201). Das heißt die komplette Rückseite ist mit einen Kühlkörper belegt. Dies ist möglich da das PCB so designt wurde das sich auf dieser Seite nur der Stromregel-Mosfet (FET201 im linearbetrieb) befindet. Damit es zu möglichst keinen Komplikationen kommt wurde auf Designrules des PCB-Herstellers und der Bauteilhersteller geachtet. Auch wurde beachtet das auf Leiterbahnen mit hoher Strombelastung möglichst kurz und breit gehalten werden. All das kann man in Abbildung \ref{fig:Ausschnitt des PCB-Designs} feststellen.\hfill \break 
 	\newpage
 	\begin{adjustbox}{center,caption={Ausschitt des Designs },label={fig:Ausschnitt des PCB-Designs},nofloat=figure,vspace=\bigskipamount}
@@ -452,6 +452,14 @@
 	\end{adjustbox}
 	Alles in Gelb ist am Finalen PCB in einer kontrastreichen Farbe.
 	\ifoot{Dominik Gansch, Florian Hintermeier}	
+=======
+		Die größe des PCBs beträgt 85 mm x 70mm, so finden mehrere Module auf einer Eurokarte Platz. Da auf Benutzerfreundlichkeit geachtet wurde ist jeder Ein-, Ausgangsstecker und jedes Potentiometer nach deren Funktion beschriftet. Auch wurden zusätzliche Lötpads (R207) an Teilen der Schaltung hinzugefügt wo möglicherweise Störungen auftreten können. So kann man die Schaltung, Hardwareseitig, auch nachträglich noch durch Filter optimieren. Der Kühlflächenplatz wurde so gelöst das sich diese auf der kompletten Rückseite des PCBs befindet (Kühlung des Mosfets FET201). Das heißt die komplette Rückseite ist mit einen Kühlkörper belegt. Dies ist möglich da das PCB so designt wurde das auf dieser Seite keine Bauteile montiert werden. Damit es zu möglichst keinen Komplikationen kommt wurde auf Designrules seitens des PCB-Herstellers und der Bauteilhersteller geachtet. Auch wurde beachtet das auf Leitungen mit hoher Strombelastung möglichst kurz und breit gehalten werden. All das kann man in \ref{fig:Ausschnitt des PCB-Designs} feststellen.\hfill \break 
+		\begin{adjustbox}{center,caption={Ausschitt des Designs },label={fig:Ausschnitt des PCB-Designs},nofloat=figure,vspace=\bigskipamount}
+			%%	\includegraphics[width=\textwidth]{img/PCB-Design.PNG}
+		\end{adjustbox}
+	\newpage
+	\ifoot{Florian Hintermeier}	
+>>>>>>> 56599f54e6f1c484ad51fa5140d9cb2801ebbf6e
 	\section{Software}\hfill \break
 		\subsection{Programmablauf}\hfill \break
 		Um die Programmierung bestmöglich umsetzen zu können, ist es sinnvoll einen Programmablaufplan zu erstellen, mithilfe davon ist es einfacher Abläufe des Programms zu Planen und diese auch nachzuvollziehen und zu verstehen.
@@ -471,15 +479,15 @@
 	
 		\subsubsection{Ablauf}\hfill \break
 		Nach der Initialisierung geht es direkt ins Hauptprogramm über, hier wird ständig überprüft, ob vom User Controlled Device eine Anfrage an den Mikrocontroller gemacht wurde. Hier gibt es zwei Möglichkeiten, entweder, eine Anfrage wurde getätigt, dann wird diese Ausgewertet. Ist aber keine Anfrage getätigt worden, beginnt es von neuem.\hfill \break \hfill \break
-		Es gibt zwei Mögliche anfragen, die Ausgewertet werden können, diese sind die Abfrage des Stromes, der gerade gezogen wird und die Anweisung den Strom zu ändern oder LEDs ein oder auszuschalten.\hfill \break \hfill \break
+		Es gibt zwei mögliche Anfragen, die ausgewertet werden können. Diese sind die Abfrage des Stromes, der gerade gezogen wird und die Anweisung den Strom zu ändern oder LEDs ein oder auszuschalten.\hfill \break \hfill \break
 		Soll der Strom gemessen werden, wird eine ADC Messung durchgeführt, die Ergebnisse davon werden dann ausgewertet und per CAN wieder an das User Controlled Device zurückgesendet.\hfill \break \hfill \break
-		Beim Einstellen der LEDs wird ausgewertet, wie viele LEDs am Modul noch eingeschaltet sind, nach dem richtet sich die Spannung. Die Spannung wird durch das Verändern eines Spannungsteilers am Feedback Eingang des SEPIC Chips eingestellt. Dieser Spannungsteiler wird durch ein digitales Potentiometer verändert, dieses bekommt den Widerstand so eingestellt, dass die gewünschte Ausgangsspannung anliegt. Wie man auf die Werte kommt, kann im \hyperref[sec:berechnungen]{Kapitel Berechnungen} nachgelesen werden.\hfill \break \hfill \break
-		Soll der Ausgangsstrom verändert werden, wird mithilfe des DACs die Spannung an einem der Operationsverstärker, die einen für den Stromfluss zuständigen MOSFET ansteuern, verändert. Nach dieser Änderung, wird eine ADC Messung durchgeführt, ob nun der richtige Strom fließt, ist das nicht der Fall, wird überpüft ob zu viel oder zu wenig Strom fließt, nochmals mit dem DAC eingestellt und danach wieder gemessen, solange, bis der Wert stimmt. Sollte es gleich beim ersten Mal der gewünschte Wert sein, wird ganz von vorne begonnen und auf UCD Anfragen kommen.
+		Beim Einstellen der LEDs wird ausgewertet, wie viele LEDs am Modul noch eingeschaltet sind, nach dem richtet sich die Spannung. Die Spannung wird durch das Verändern eines Spannungsteilers am Feedback Eingang des SEPIC Chips eingestellt. Dieser Spannungsteiler wird durch ein digitales Potentiometer verändert, es bekommt den Widerstand so eingestellt, dass die gewünschte Ausgangsspannung anliegt. Wie man auf die Werte kommt, kann im \hyperref[sec:berechnungen]{Kapitel Berechnungen} nachgelesen werden.\hfill \break \hfill \break
+		Soll der Ausgangsstrom verändert werden, wird mithilfe des DACs die Spannung an einem der Operationsverstärker, die einen für den Stromfluss zuständigen MOSFET ansteuern, verändert. Nach dieser Änderung, wird eine ADC Messung durchgeführt, ob nun der richtige Strom fließt. Ist das nicht der Fall, wird überpüft ob zu viel oder zu wenig Strom fließt, nochmals mit dem DAC eingestellt und danach wieder gemessen, solange, bis der Wert stimmt. Sollte es gleich beim ersten Mal der gewünschte Wert sein, wird ganz von vorne begonnen und auf UCD Anfragen kommen.
 		\newpage
 		
 		\subsection{Initialisierungen}\hfill \break
 		\subsubsection{Initialisierung von CAN}\hfill \break
-		Um CAN zu initialisieren müssen pro CAN-Interface mindestens sechs Register beschrieben werden.
+		Um CAN zu initialisieren, müssen pro CAN-Interface mindestens sechs Register beschrieben werden.
 		Welche das sind, ist im Datenblatt zu finden, ab Seite 762. 
 		Grundsätzlich sieht die CAN Initialisierung für diesen Anwendungsfall bei einem Interface wie folgt aus:
 		\lstinputlisting[language=c, caption=C-Code für CANIF1 Initialisierung]{src/canInit.c}
@@ -502,7 +510,7 @@
 			\item Master-Modus: aktiviert
 		\end{itemize} \newpage
 		\subsubsection{Initialisierung vom DAC}\hfill \break
-		Um den DAC zu initialisieren müssen mindestens sechs Register beschrieben werden. Diese Register und weitere Möglichkeiten für Einstellungen sind im Datenblatt ab Seite 1148 zu finden. Für den hier benötigten Anwendungsfall sieht die Initialisierung wie folgt aus: 		 
+		Um den DAC zu initialisieren, müssen mindestens sechs Register beschrieben werden. Diese Register und weitere Möglichkeiten für Einstellungen sind im Datenblatt ab Seite 1148 zu finden. Für den hier benötigten Anwendungsfall sieht die Initialisierung wie folgt aus: 		 
 		\lstinputlisting[language=c, caption=C-Code für DAC Initialisierung]{src/dacInit.c}
 		Die wichtigsten Werte hier sind:
 		\begin{itemize}
@@ -512,7 +520,7 @@
 			\item DAC enable: aktiviert
 		\end{itemize} \newpage
 		\subsubsection{Initialisierung vom ADC}\hfill \break
-		Um den ADC zu initialisieren müssen mindestens dreizehn Register beschrieben werden. Diese Register und weitere Möglichkeiten für Einstellungen sind im Datenblatt ab Seite 1102 zu finden. Für den hier benötigten Anwendungsfall sieht die Initialisierung wie folgt aus: 		 
+		Um den ADC zu initialisieren, müssen mindestens dreizehn Register beschrieben werden. Diese Register und weitere Möglichkeiten für Einstellungen sind im Datenblatt ab Seite 1102 zu finden. Für den hier benötigten Anwendungsfall sieht die Initialisierung wie folgt aus: 		 
 		\lstinputlisting[language=c, caption=C-Code für ADC Initialisierung]{src/adcInit.c}
 		Die wichtigsten Werte hier sind:
 		\begin{itemize}
@@ -641,7 +649,7 @@ Die Betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem
 			\item Ausrüstungskosten - 748,44€
 			\item Produktionskosten - 118,71€
 		\end{itemize}
-		\textbf{SUMME: 10755,03}
+		\textbf{SUMME: 10755,03€}
 		\newpage	
 	
 	\section{Break-Even-Analyse}\hfill \break
