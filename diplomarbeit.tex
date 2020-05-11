@@ -72,7 +72,7 @@
 
 \title{Universeller hochdynamischer LED-Treiber}
 \author{Florian Hintermeier \and Dominik Gansch}
-\date{\today}
+\date{24. April 2020}
 \place{St. P\"olten}
 \professor{Dipl.-Ing. Josef Radlbauer}
 %%====================================================%%
@@ -94,7 +94,7 @@
 %%======================================================%%
 
 %% komplett leere seite ================================%%
-\newpage\null\thispagestyle{empty}\newpage
+%%\newpage\null\thispagestyle{empty}\newpage
 %%======================================================%%
 
 %% eidesstattliche erklärung ===========================%%
@@ -380,7 +380,7 @@
 			\begin{adjustbox}{center,caption={Berechneter Spannungsverlauf bei Widerstandsänderung},label={fig:berechnungSPG},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/berechnungSPG.PNG}
 			\end{adjustbox}
-			Im späteren Verlauf wird die einzustellende Spannung bekannt gemacht, da man vom UCD die einzuschaltenden LEDs übertragen bekommt. Das heißt man muss in diesem Fall nicht nach der Ausgangsspannung berechnen, da diese bekannt ist, sondern nach dem Widerstandswert. \hfill \break \hfill \break
+			Im späteren Verlauf wird die einzustellende Spannung bekannt gemacht, da man vom UCD die einzuschaltenden LEDs übertragen bekommt. Das heißt, man muss in diesem Fall nicht nach der Ausgangsspannung berechnen, da diese bekannt ist, sondern nach dem Widerstandswert. \hfill \break \hfill \break
 			\textbf{Formel zur Berechnung des Widerstandswertes:}
 			\begin{align*} 
 			R=\frac{ U - 2 }{ 200 }^{ -\frac{ 1 }{ 1,1 } }
@@ -444,29 +444,21 @@
 			\end{minipage}
 		\end{center}
 		\hfill \break
-<<<<<<< HEAD
 		Die größe des PCBs beträgt 85 mm x 70mm, so finden mehrere Module auf einem PCB im Eurokartenformat Platz. Da auf Benutzerfreundlichkeit geachtet wurde ist jeder Ein-, Ausgangsstecker und jedes Potentiometer nach deren Funktion beschriftet. Auch wurden zusätzliche Lötpads (R207) an Teilen der Schaltung hinzugefügt wo möglicherweise Störungen auftreten können. So kann man die Schaltung, Hardwareseitig, auch nachträglich noch durch Filter optimieren. Der Kühlflächenplatz wurde so gelöst das sich diese auf der kompletten Rückseite des PCBs befindet (Kühlung des Mosfets FET201). Das heißt die komplette Rückseite ist mit einen Kühlkörper belegt. Dies ist möglich da das PCB so designt wurde das sich auf dieser Seite nur der Stromregel-Mosfet (FET201 im linearbetrieb) befindet. Damit es zu möglichst keinen Komplikationen kommt wurde auf Designrules des PCB-Herstellers und der Bauteilhersteller geachtet. Auch wurde beachtet das auf Leiterbahnen mit hoher Strombelastung möglichst kurz und breit gehalten werden. All das kann man in Abbildung \ref{fig:Ausschnitt des PCB-Designs} feststellen.\hfill \break 
 	\newpage
 	\begin{adjustbox}{center,caption={Ausschitt des Designs },label={fig:Ausschnitt des PCB-Designs},nofloat=figure,vspace=\bigskipamount}
 		\includegraphics[width=\textwidth]{img/PCB-Design.PNG}
 	\end{adjustbox}
 	Alles in Gelb ist am Finalen PCB in einer kontrastreichen Farbe.
-	\ifoot{Dominik Gansch, Florian Hintermeier}	
-=======
-		Die größe des PCBs beträgt 85 mm x 70mm, so finden mehrere Module auf einer Eurokarte Platz. Da auf Benutzerfreundlichkeit geachtet wurde ist jeder Ein-, Ausgangsstecker und jedes Potentiometer nach deren Funktion beschriftet. Auch wurden zusätzliche Lötpads (R207) an Teilen der Schaltung hinzugefügt wo möglicherweise Störungen auftreten können. So kann man die Schaltung, Hardwareseitig, auch nachträglich noch durch Filter optimieren. Der Kühlflächenplatz wurde so gelöst das sich diese auf der kompletten Rückseite des PCBs befindet (Kühlung des Mosfets FET201). Das heißt die komplette Rückseite ist mit einen Kühlkörper belegt. Dies ist möglich da das PCB so designt wurde das auf dieser Seite keine Bauteile montiert werden. Damit es zu möglichst keinen Komplikationen kommt wurde auf Designrules seitens des PCB-Herstellers und der Bauteilhersteller geachtet. Auch wurde beachtet das auf Leitungen mit hoher Strombelastung möglichst kurz und breit gehalten werden. All das kann man in \ref{fig:Ausschnitt des PCB-Designs} feststellen.\hfill \break 
-		\begin{adjustbox}{center,caption={Ausschitt des Designs },label={fig:Ausschnitt des PCB-Designs},nofloat=figure,vspace=\bigskipamount}
-			%%	\includegraphics[width=\textwidth]{img/PCB-Design.PNG}
-		\end{adjustbox}
 	\newpage
 	\ifoot{Florian Hintermeier}	
->>>>>>> 56599f54e6f1c484ad51fa5140d9cb2801ebbf6e
 	\section{Software}\hfill \break
 		\subsection{Programmablauf}\hfill \break
-		Um die Programmierung bestmöglich umsetzen zu können, ist es sinnvoll einen Programmablaufplan zu erstellen, mithilfe davon ist es einfacher Abläufe des Programms zu Planen und diese auch nachzuvollziehen und zu verstehen.
+		Um die Programmierung bestmöglich umsetzen zu können, ist es sinnvoll einen Programmablaufplan zu erstellen, mithilfe davon ist es einfacher Abläufe des Programms zu planen und diese auch nachzuvollziehen und zu verstehen.
 		\begin{adjustbox}{center,caption={Programmablaufplan},label={fig:PAP.png},nofloat=figure,vspace=\bigskipamount}
 			\includegraphics[height=18cm]{img/Dyn-LED-Driver-PAP.png}
 		\end{adjustbox}
-		Für noch besseres Verständnis der Abläufe im Programm folgt hier zusätzlich zum Programmablaufplan noch eine Detaillierte Erklärung der einzelnen Elemente davon. Oben angefangen und nach unten aufgearbeitet.
+		Für noch besseres Verständnis der Abläufe im Programm folgt hier zusätzlich zum Programmablaufplan noch eine detaillierte Erklärung der einzelnen Elemente davon. Oben angefangen und nach unten aufgearbeitet.
 		\subsubsection{Initialisierung}\hfill \break
 		Um die Gewünschte Funktionalität des Mikrocontrollers zu aktivieren, müssen vor dem eigentlichen Programmablauf alle Peripherie und auch interne Funktionen erst initialisiert werden. Dies wird mittels Bit schieben in den einzelnen Registern gemacht. \hfill \break \hfill \break		
 		\textbf{Zu initialisierende Funktionen:}
@@ -478,7 +470,7 @@
 		\end{itemize}
 	
 		\subsubsection{Ablauf}\hfill \break
-		Nach der Initialisierung geht es direkt ins Hauptprogramm über, hier wird ständig überprüft, ob vom User Controlled Device eine Anfrage an den Mikrocontroller gemacht wurde. Hier gibt es zwei Möglichkeiten, entweder, eine Anfrage wurde getätigt, dann wird diese Ausgewertet. Ist aber keine Anfrage getätigt worden, beginnt es von neuem.\hfill \break \hfill \break
+		Nach der Initialisierung geht es direkt ins Hauptprogramm über, hier wird ständig überprüft, ob vom User Controlled Device eine Anfrage an den Mikrocontroller gemacht wurde. Es gibt zwei Möglichkeiten, entweder, eine Anfrage wurde getätigt, dann wird diese ausgewertet. Ist aber keine Anfrage getätigt worden, beginnt es von neuem.\hfill \break \hfill \break
 		Es gibt zwei mögliche Anfragen, die ausgewertet werden können. Diese sind die Abfrage des Stromes, der gerade gezogen wird und die Anweisung den Strom zu ändern oder LEDs ein oder auszuschalten.\hfill \break \hfill \break
 		Soll der Strom gemessen werden, wird eine ADC Messung durchgeführt, die Ergebnisse davon werden dann ausgewertet und per CAN wieder an das User Controlled Device zurückgesendet.\hfill \break \hfill \break
 		Beim Einstellen der LEDs wird ausgewertet, wie viele LEDs am Modul noch eingeschaltet sind, nach dem richtet sich die Spannung. Die Spannung wird durch das Verändern eines Spannungsteilers am Feedback Eingang des SEPIC Chips eingestellt. Dieser Spannungsteiler wird durch ein digitales Potentiometer verändert, es bekommt den Widerstand so eingestellt, dass die gewünschte Ausgangsspannung anliegt. Wie man auf die Werte kommt, kann im \hyperref[sec:berechnungen]{Kapitel Berechnungen} nachgelesen werden.\hfill \break \hfill \break
@@ -491,8 +483,8 @@
 		Welche das sind, ist im Datenblatt zu finden, ab Seite 762. 
 		Grundsätzlich sieht die CAN Initialisierung für diesen Anwendungsfall bei einem Interface wie folgt aus:
 		\lstinputlisting[language=c, caption=C-Code für CANIF1 Initialisierung]{src/canInit.c}
-		Im oben sichtbaren C-Code sieht man die Portpin Initialisierungen in den richtigen Modus. Weiters kann man sehen, wie die Konfiguration für diesen CAN Kanal durchgeführt wird. Im Letzten Bereich ist zu sehen, wie für diesen CAN Kanal einzelne Kontrollwerte eingestellt werden.
-		Die wichtigsten Werte hier sind:
+		Im oben sichtbaren C-Code sieht man die Portpin Initialisierungen in den richtigen Modus. Weiters kann man sehen, wie die Konfiguration für diesen CAN Kanal durchgeführt wird. Im letzten Bereich ist zu sehen, wie für diesen CAN Kanal einzelne Kontrollwerte eingestellt werden.
+		Die wichtigsten Werte sind:
 		\begin{itemize}
 			\item Externer interrupt: aktiviert (wenn eine Übertragung stattfindet, wird diese sofort registriert)
 			\item Overload handling: deaktiviert (wenn eine zu lange Übertragung festgestellt wird, wird nichts unternommen, da dies nicht vorkommen sollte)
@@ -502,7 +494,7 @@
 		\subsubsection{Initialisierung von SPI}\hfill \break
 		Für die Initialisierung von SPI müssen mindestens vier Register beschrieben werden. Diese können im Datenblatt ab Seite 657 aufgefunden werden.
 		\lstinputlisting[language=c, caption=C-Code für SPI Initialisierung]{src/spiInit.c}
-		Im C-Code über diesem Text sieht man, dass die GPIO-Pins auf Mode A, in diesem Fall der SPI Modus gesetzt wurden. Weiters wurde SPI im Master-Modus konfiguriert, das bedeutet der Mikrocontroller gibt die befehle und erhält keine. Das Anzusprechende gerät wird über einen Peripherie-Pin direkt ausgewählt.
+		Im C-Code über diesem Text sieht man, dass die GPIO-Pins auf Mode A, in diesem Fall der SPI Modus gesetzt wurden. Weiters wurde SPI im Master-Modus konfiguriert, das bedeutet der Mikrocontroller gibt die Befehle und erhält keine. Das anzusprechende Gerät wird über einen Peripherie-Pin direkt ausgewählt.
 		Die wichtigsten Werte hier sind:
 		\begin{itemize}
 			\item SPI-enable: aktiviert (SPI wird am Mikrocontroller aktiviert)
@@ -527,8 +519,8 @@
 			\item Timer start: aktiviert
 			\item Timer stop: aktiviert 
 			\item Sequencer Start of Conversion 0: aktiviert
-			\item Muliplex Settle Time: aktiviert (Eineinhalb Fache zeit für den Multiplexer)
-			\item External Reference: deaktiviert (Interne REferenzspannung wird für MEssung verwendet)
+			\item Muliplex Settle Time: aktiviert (Eineinhalbfache Zeit für den Multiplexer)
+			\item External Reference: deaktiviert (Interne Referenzspannung wird für Messung verwendet)
 			\item Sample and Hold: aktiviert
 			\item Reference Source: eins (Eingangsspannung)
 			\item Freerunning mode: deaktiviert
@@ -539,7 +531,7 @@
 		
 		\subsection{Controller Area Network}\hfill \break
 			\subsubsection{Grundlagen zu CAN}\hfill \break
-			Mit CAN werden mehrere gleichberechtigte Komponenten miteinander verbunden und können somit miteinander kommunizieren. Sehr beliebt ist es, wegen seiner Störsicherheit und der Echtzeitfähigkeit. Eingesetzt wird es häufig im Automobilbereich, und der Medizintechnik aber auch in vielen weiteren Systemen.
+			Mit CAN werden mehrere gleichberechtigte Komponenten miteinander verbunden und können somit miteinander kommunizieren. Wegen seiner Störsicherheit und der Echtzeitfähigkeit ist es sehr beliebt. Eingesetzt wird es häufig im Automobilbereich, und der Medizintechnik aber auch in vielen weiteren Systemen.
 			
 			Die Übertragung wird differenziell über zwei verdrillte Leitungen bewerkstelligt, dadurch wird die Störanfälligkeit minimiert. In folgender Grafik kann man sehen, wie diese bitweise Übertragung auf den beiden CAN Leitungen aussieht.
 			\begin{adjustbox}{center,caption={CAN Übertragung},label={fig:CANbits.png},nofloat=figure,vspace=\bigskipamount}
@@ -554,11 +546,11 @@
 			\begin{adjustbox}{center,caption={Programmablauf LMM},label={fig:PABL-LMM},nofloat=figure,vspace=\bigskipamount}
 				\includegraphics[width=\textwidth]{img/Programmablauf-LMM.png}
 			\end{adjustbox} \hfill \break
-			Im Programmablauf ist der Teil des Programmablaufplans von Abbildung \ref{fig:PAP.png}, mit der Bezeichnung 'Übermittlung an den LMM über CAN' zu sehen. Bei diesem Prozess gibt es drei verschiedene Möglichkeiten, wie die Übertragung stattfindet, beziehungsweise ob sie stattfindet. Im Grunde werden einer Funktion alle Daten, also die ein oder auszuschaltenden LED-Adressen übergeben. Diese Adressen werden dann zu einer Nachricht zusammengesetzt, also dass nicht viele einzelne Adressen hintereinander geschickt werden, sondern mehrere gleichzeitig. Im nächsten Schritt wird überprüft ob die verwendeten Adressen in den Vordefinierten Adressen enthalten sind. \hfill \break \newpage
-			\textbf{Die Vordefinierten Adressen sehen wie folgt aus:} \hfill \break
+			Im Programmablauf ist der Teil des Programmablaufplans von Abbildung \ref{fig:PAP.png}, mit der Bezeichnung 'Übermittlung an den LMM über CAN' zu sehen. Bei diesem Prozess gibt es drei verschiedene Möglichkeiten, wie die Übertragung stattfindet, beziehungsweise ob sie stattfindet. Im Grunde werden einer Funktion alle Daten, also die ein oder auszuschaltenden LED-Adressen übergeben. Diese Adressen werden dann zu einer Nachricht zusammengesetzt, so dass nicht viele einzelne Adressen hintereinander geschickt werden, sondern mehrere gleichzeitig. Im nächsten Schritt wird überprüft ob die verwendeten Adressen in den vordefinierten Adressen enthalten sind. \hfill \break \newpage
+			\textbf{Die vordefinierten Adressen sehen wie folgt aus:} \hfill \break
 			\lstinputlisting[language=c, caption=LED Adressen des LMMs]{src/LEDAdressen.c} \hfill \break
-			Um diese Adressen mit den Eingegangenen zu vergleichen wird eine Schleife verwendet, die jede eingegangene Adresse einzeln mit jeder Vordefinierten Adresse vergleicht. Passen alle Adressen wird eine Nachricht mit LMM-ID und den zu toggelnden LEDs zusammengesetzt und diese wird im Anschluss versendet. \hfill \break \hfill \break
-			Stimmen nicht alle Adressen, werden die falschen weggelassen und nur die Korrekten werden in das Adressen, ID Paket eingefügt, im Anschluss wird die Nachricht dann versendet. \hfill \break \hfill \break
+			Um diese Adressen mit den eingegangenen zu vergleichen wird eine Schleife verwendet, die jede eingegangene Adresse einzeln mit jeder vordefinierten Adresse vergleicht. Passen alle Adressen wird eine Nachricht mit LMM-ID und den zu toggelnden LEDs zusammengesetzt und diese wird im Anschluss versendet. \hfill \break \hfill \break
+			Stimmen nicht alle Adressen, werden die falschen weggelassen und nur die korrekten werden in das Adressen, ID Paket eingefügt. Im Anschluss wird die Nachricht versendet. \hfill \break \hfill \break
 			Sollten keine der Adressen stimmen, wird gar keine CAN-Nachricht versendet, da es ja auch keine Veränderung am LMM bringen würde.
 			\newpage
 			
@@ -611,11 +603,11 @@
 			\newpage
 \ifoot{Florian Hintermeier}	
 \chapter{Betriebswirtschaftliche Kalkulation}\hfill \break
-Die Betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem Unternehmen oder wie in diesem Fall einem Projekt. Hier werden die Berechnungen so aufgestellt, als würde dieses Projekt von einem Kleinunternehmen hergestellt werden. 
+Die betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem Unternehmen oder wie in diesem Fall einem Projekt. Hier werden die Berechnungen so aufgestellt, als würde dieses Projekt von einem Kleinunternehmen hergestellt werden. 
 	\section{Kostenrechnung}\hfill \break
 		\subsection{Personalkosten und Arbeitszeit}\hfill \break
 		Ein großer Kostenpunkt sind Personalkosten, die je nach Abschluss, Erfahrung und auch Arbeitszeit des Mitarbeiters unterschiedlich sein können.
-		Durchschnittlich verdienen HTL Absolventen 28130€ im Jahr, das ist bei einer Anstellung mit 38,5 Stunden in der Woche ein Stundenlohn von 13,05€. \footnote{https://www.absolventen.at/magazin/gehaltsvorstellung-was-ist-deine-leistung-wert/}
+		Durchschnittlich verdienen HTL Absolventen 28130€ im Jahr, das ist bei einer Anstellung mit 38,5 Stunden pro Woche, ein Stundenlohn von 13,05€. \footnote{https://www.absolventen.at/magazin/gehaltsvorstellung-was-ist-deine-leistung-wert/}
 		\begin{align*} 
 		K_{ P } = 13,05\text{€/h} * (349,3\text{h} + 342,3\text{h}) = 9025,38\text{€}
 		\end{align*} 
@@ -678,7 +670,7 @@ Die Betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem
 			
 		\subsection{Break-Even-Umsatz}\hfill \break
 		\begin{align*} 
-		Break-Even-Umsatz = Break-Even-Point * Erlöse
+		Break-Even-Umsatz = Break-Even-Point * \text{Erlöse}
 		\end{align*} 
 		\begin{align*} 
 		Break-Even-Umsatz = 131 \text{Stück} * 200\text{€} = 26200\text{€}
@@ -738,7 +730,7 @@ Die Betriebswirtschaftliche Kalkulation dient der Übersicht der Kosten in einem
 \includepdf[pages=1,angle=90, scale=0.9, pagecommand={\phantomsection\addcontentsline{toc}{chapter}{Schaltung Digitalteil}}]{schaltungen/Dynamic_LED_Driver.pdf}
 \newpage
 \markright{Schaltung Analogteil}
-\ifoot{Dominik Gansch}
+\ifoot{Florian Hintermeier}
 \includepdf[pages=2,angle=90, scale=0.9, pagecommand={\phantomsection\addcontentsline{toc}{chapter}{Schaltung Analogteil}}]{schaltungen/Dynamic_LED_Driver.pdf}
 \newpage
 \markright{Bauteilliste}
